@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -23,10 +24,30 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.unicen.tandilrecicla.MainActivity;
 import com.unicen.tandilrecicla.R;
+import com.unicen.tandilrecicla.data.model.Address;
+import com.unicen.tandilrecicla.data.model.RegisteredUser;
+import com.unicen.tandilrecicla.data.remote.RequestApi;
+import com.unicen.tandilrecicla.data.remote.ServiceGenerator;
+
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
+import java.io.IOException;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final String TAG = "LoginActivity";
+
     private LoginViewModel loginViewModel;
+
+    private RequestApi setApi;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +61,8 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
         final Context context = this;
+
+        setApi = ServiceGenerator.getRequestApi();
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -72,7 +95,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 setResult(Activity.RESULT_OK);
 
-                //Complete and destroy login activity once successful
                 startActivity(new Intent(MainActivity.getIntent(context)));
                 finish();
             }
@@ -115,6 +137,69 @@ public class LoginActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+            }
+        });
+
+        sendPost(new RegisteredUser(
+                "Mauri",
+                "Arroqui",
+                "mauriarroqui@gmail.com",
+                "marroqui2",
+                new Address(
+                        "Tandil",
+                        874,
+                        "Alberdi",
+                        "Tandil",
+                        "Buenos Aires",
+                        "7000")));
+
+        loginViewModel.makeQuery().observe(this, new androidx.lifecycle.Observer<ResponseBody>() {
+            @Override
+            public void onChanged(ResponseBody responseBody) {
+                Log.d(TAG, "onChanged: this is a live data response!");
+                try {
+                    Log.d(TAG, "onChanged: " + responseBody.string());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void sendPost(RegisteredUser user) {
+        setApi.savePost("Mauri",
+                "Arroqui",
+                "mauriarroqui@gmail.com",
+                "marroqui2")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<RegisteredUser>() {
+                    @Override
+                    public void onNext(RegisteredUser user) {
+                        Log.i(TAG, "post next to API.");
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        Log.e(TAG, "Unable to submit post to API.");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.i(TAG, "post completed to API.");
+                    }
+                });
+    }
+            @Override
+            public void onResponse(Call<RegisteredUser> call, Response<RegisteredUser> response) {
+                if (response.isSuccessful()) {
+                    Log.i(TAG, "post submitted to API." + response.body().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RegisteredUser> call, Throwable t) {
+                Log.e(TAG, "Unable to submit post to API.");
             }
         });
     }

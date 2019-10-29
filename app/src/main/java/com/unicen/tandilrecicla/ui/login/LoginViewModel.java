@@ -6,10 +6,13 @@ import androidx.lifecycle.ViewModel;
 
 import android.util.Patterns;
 
+import com.unicen.tandilrecicla.data.LoginDataSource;
 import com.unicen.tandilrecicla.data.LoginRepository;
 import com.unicen.tandilrecicla.data.Result;
 import com.unicen.tandilrecicla.data.model.LoggedInUser;
 import com.unicen.tandilrecicla.R;
+
+import okhttp3.ResponseBody;
 
 public class LoginViewModel extends ViewModel {
 
@@ -27,6 +30,10 @@ public class LoginViewModel extends ViewModel {
 
     LiveData<LoginResult> getLoginResult() {
         return loginResult;
+    }
+
+    public LiveData<ResponseBody> makeQuery(){
+        return loginRepository.makeReactiveQuery();
     }
 
     public void login(String username, String password) {

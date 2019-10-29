@@ -1,6 +1,14 @@
 package com.unicen.tandilrecicla.data;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.LiveDataReactiveStreams;
+
 import com.unicen.tandilrecicla.data.model.LoggedInUser;
+import com.unicen.tandilrecicla.data.model.RegisteredUser;
+import com.unicen.tandilrecicla.data.remote.ServiceGenerator;
+
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -26,6 +34,12 @@ public class LoginRepository {
             instance = new LoginRepository(dataSource);
         }
         return instance;
+    }
+
+    public LiveData<ResponseBody> makeReactiveQuery() {
+        return LiveDataReactiveStreams.fromPublisher(ServiceGenerator.getRequestApi()
+                .makeQuery()
+                .subscribeOn(Schedulers.io()));
     }
 
     public boolean isLoggedIn() {

@@ -1,6 +1,4 @@
-package com.unicen.tandilrecicla.data;
-
-import com.unicen.tandilrecicla.data.remote.RequestApi;
+package com.unicen.tandilrecicla.data.remote;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -8,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGenerator {
 
-    public static final String BASE_URL = "https://jsonplaceholder.typicode.com";
+    public static final String BASE_URL = "https://jsonplaceholder.typicode.com/";
 
     private static Retrofit.Builder retrofitBuilder =
             new Retrofit.Builder()
@@ -20,7 +18,7 @@ public class ServiceGenerator {
 
     private static RequestApi requestApi = retrofit.create(RequestApi.class);
 
-    public static RequestApi getRequestApi(){
+    public static RequestApi getRequestApi() {
         return requestApi;
     }
 }
