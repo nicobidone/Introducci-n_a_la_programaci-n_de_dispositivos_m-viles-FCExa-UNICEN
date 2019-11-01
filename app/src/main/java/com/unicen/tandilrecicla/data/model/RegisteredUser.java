@@ -21,14 +21,6 @@ public class RegisteredUser {
 //    @Expose
 //    private Address address;
 
-    public RegisteredUser(String firstName, String lastName, String mail, String username, Address addressObject) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.mail = mail;
-        this.username = username;
-//        this.address = addressObject;
-    }
-
     // Getter Methods
 
     public String getFirstName() {

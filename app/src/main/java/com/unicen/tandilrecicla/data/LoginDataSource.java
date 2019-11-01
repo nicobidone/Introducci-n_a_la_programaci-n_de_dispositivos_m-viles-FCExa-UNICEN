@@ -25,27 +25,27 @@ public class LoginDataSource {
         }
     }
 
-    public Result<RegisteredUser> register() {
-        try {
+//    public Result<RegisteredUser> register() {
+//        try {
             // TODO: handle loggedInUser authentication
-            RegisteredUser fakeUser =
-                    new RegisteredUser(
-                            "Mauri",
-                            "Arroqui",
-                            "mauriarroqui@gmail.com",
-                            "marroqui2",
-                            new Address(
-                                    "Tandil",
-                                    874,
-                                    "Alberdi",
-                                    "Tandil",
-                                    "Buenos Aires",
-                                    "7000"));
-            return new Result.Success<>(fakeUser);
-        } catch (Exception e) {
-            return new Result.Error(new IOException("Error logging in", e));
-        }
-    }
+//            RegisteredUser fakeUser =
+//                    new RegisteredUser(
+//                            "Mauri",
+//                            "Arroqui",
+//                            "mauriarroqui@gmail.com",
+//                            "marroqui2",
+//                            new Address(
+//                                    "Tandil",
+//                                    874,
+//                                    "Alberdi",
+//                                    "Tandil",
+//                                    "Buenos Aires",
+//                                    "7000"));
+//            return new Result.Success<>(fakeUser);
+//        } catch (Exception e) {
+//            return new Result.Error(new IOException("Error logging in", e));
+//        }
+//    }
 
     public void logout() {
         // TODO: revoke authentication

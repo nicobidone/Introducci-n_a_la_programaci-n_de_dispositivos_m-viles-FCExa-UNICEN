@@ -37,7 +37,8 @@ public class LoginRepository {
     }
 
     public LiveData<ResponseBody> makeReactiveQuery() {
-        return LiveDataReactiveStreams.fromPublisher(ServiceGenerator.getRequestApi()
+        return LiveDataReactiveStreams
+                .fromPublisher(ServiceGenerator.getRequestApi()
                 .makeQuery()
                 .subscribeOn(Schedulers.io()));
     }

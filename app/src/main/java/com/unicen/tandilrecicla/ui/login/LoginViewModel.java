@@ -1,16 +1,15 @@
 package com.unicen.tandilrecicla.ui.login;
 
+import android.util.Patterns;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import android.util.Patterns;
-
-import com.unicen.tandilrecicla.data.LoginDataSource;
+import com.unicen.tandilrecicla.R;
 import com.unicen.tandilrecicla.data.LoginRepository;
 import com.unicen.tandilrecicla.data.Result;
 import com.unicen.tandilrecicla.data.model.LoggedInUser;
-import com.unicen.tandilrecicla.R;
 
 import okhttp3.ResponseBody;
 
@@ -32,7 +31,7 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-    public LiveData<ResponseBody> makeQuery(){
+    LiveData<ResponseBody> makeQuery() {
         return loginRepository.makeReactiveQuery();
     }
 
@@ -48,7 +47,7 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-    public void loginDataChanged(String username, String password) {
+    void loginDataChanged(String username, String password) {
         if (!isUserNameValid(username)) {
             loginFormState.setValue(new LoginFormState(R.string.invalid_username, null));
         } else if (!isPasswordValid(password)) {

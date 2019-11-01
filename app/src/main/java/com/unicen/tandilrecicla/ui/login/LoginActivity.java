@@ -24,18 +24,14 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.unicen.tandilrecicla.MainActivity;
 import com.unicen.tandilrecicla.R;
-import com.unicen.tandilrecicla.data.model.Address;
 import com.unicen.tandilrecicla.data.model.RegisteredUser;
+import com.unicen.tandilrecicla.data.remote.APIService;
+import com.unicen.tandilrecicla.data.remote.ApiUtils;
 import com.unicen.tandilrecicla.data.remote.RequestApi;
 import com.unicen.tandilrecicla.data.remote.ServiceGenerator;
 
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
-
 import java.io.IOException;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,6 +45,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private RequestApi setApi;
 
+    private APIService mAPIService;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +60,8 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
         final Context context = this;
+
+        mAPIService = ApiUtils.getAPIService();
 
         setApi = ServiceGenerator.getRequestApi();
 
@@ -140,18 +141,18 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        sendPost(new RegisteredUser(
-                "Mauri",
+
+        sendPost("Mauri",
                 "Arroqui",
                 "mauriarroqui@gmail.com",
-                "marroqui2",
-                new Address(
-                        "Tandil",
-                        874,
-                        "Alberdi",
-                        "Tandil",
-                        "Buenos Aires",
-                        "7000")));
+                "marroqui2");
+//                new Address(
+//                        "Tandil",
+//                        874,
+//                        "Alberdi",
+//                        "Tandil",
+//                        "Buenos Aires",
+//                        "7000")));
 
         loginViewModel.makeQuery().observe(this, new androidx.lifecycle.Observer<ResponseBody>() {
             @Override
@@ -166,35 +167,12 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void sendPost(RegisteredUser user) {
-        setApi.savePost("Mauri",
-                "Arroqui",
-                "mauriarroqui@gmail.com",
-                "marroqui2")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<RegisteredUser>() {
-                    @Override
-                    public void onNext(RegisteredUser user) {
-                        Log.i(TAG, "post next to API.");
-                    }
+    private void sendPost(String mauri, String arroqui, String s, String marroqui2) {
+        mAPIService.savePost(mauri, arroqui, s, marroqui2).enqueue(new Callback<RegisteredUser>() {
 
-                    @Override
-                    public void onError(Throwable t) {
-                        Log.e(TAG, "Unable to submit post to API.");
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Log.i(TAG, "post completed to API.");
-                    }
-                });
-    }
             @Override
             public void onResponse(Call<RegisteredUser> call, Response<RegisteredUser> response) {
-                if (response.isSuccessful()) {
-                    Log.i(TAG, "post submitted to API." + response.body().toString());
-                }
+                Log.i(TAG, "post completed to API.");
             }
 
             @Override
@@ -214,3 +192,4 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
 }
+
