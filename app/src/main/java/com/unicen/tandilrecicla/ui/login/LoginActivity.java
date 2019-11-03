@@ -24,11 +24,10 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.unicen.tandilrecicla.MainActivity;
 import com.unicen.tandilrecicla.R;
+import com.unicen.tandilrecicla.data.LoginDataSource;
+import com.unicen.tandilrecicla.data.Result;
 import com.unicen.tandilrecicla.data.model.Recycling;
-import com.unicen.tandilrecicla.data.remote.APIService;
-import com.unicen.tandilrecicla.data.remote.ApiUtils;
-import com.unicen.tandilrecicla.data.remote.RequestApi;
-import com.unicen.tandilrecicla.data.remote.ServiceGenerator;
+import com.unicen.tandilrecicla.data.model.User;
 
 import java.io.IOException;
 
@@ -40,9 +39,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
 
-    private RequestApi setApi;
-
-    private APIService mAPIService;
+    private LoginDataSource loginDataSource;
 
 
     @Override
@@ -55,12 +52,10 @@ public class LoginActivity extends AppCompatActivity {
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
+        final Button registerButton = findViewById(R.id.register);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
         final Context context = this;
-
-        mAPIService = ApiUtils.getAPIService();
-
-        setApi = ServiceGenerator.getRequestApi();
+        loginDataSource = new LoginDataSource();
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -138,24 +133,16 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-//        Address address = new Address();
-//        address.setDepartment("Tandil");
-//        address.setCity("Tandil");
-//        address.setNumber(874);
-//        address.setStreetAddress("Alberdi");
-//        address.setCity("Tandil");
-//        address.setState("Buenos Aires");
-//        address.setZipCode("7000");
-//        RegisteredUser registeredUser = new RegisteredUser();
-//        registeredUser.setFirstName("Mauri");
-//        registeredUser.setLastName("Arroqui");
-//        registeredUser.setMail("mauriarroqui@gmail.com");
-//        registeredUser.setUsername("marroqui2");
-//        registeredUser.setAddress(address);
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                totalRecycling();
+            }
+        });
+    }
 
-//        sendPost(registeredUser);
-
-        loginViewModel.makeQuery("marroqui2").observe(this, new androidx.lifecycle.Observer<ResponseBody>() {
+    private void totalRecycling() {
+        loginViewModel.getTotalRecycling("marroqui2").observe(this, new androidx.lifecycle.Observer<ResponseBody>() {
             @Override
             public void onChanged(ResponseBody responseBody) {
                 Log.d(TAG, "onChanged: this is a live data response!");
@@ -166,23 +153,34 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
-        Recycling recycling = new Recycling();
-        recycling.setBottles(1);
-        recycling.setTetrabriks(5);
-        recycling.setGlass(3);
-        recycling.setPaperboard(4);
-        recycling.setCans(2);
-        recycling.setDate("2018-11-29");
+    private void registerRecycling() {
+        Result<Recycling> recycle = loginDataSource.recycle();
+        if (recycle instanceof Result.Success) {
+            loginViewModel.postRegisterRecycling("marroqui2", ((Result.Success<Recycling>) recycle).getData()).observe(this,
+                    new androidx.lifecycle.Observer<Recycling>() {
+                        @Override
+                        public void onChanged(Recycling responseBody) {
+                            Log.d(TAG, "onChanged: this is a live data response!");
+                            Log.d(TAG, "onChanged: " + responseBody.getDate());
+                        }
+                    });
+        }
+    }
 
-        loginViewModel.postRecycling("marroqui2",recycling).observe(this, new androidx.lifecycle.Observer<Recycling>() {
-            @Override
-            public void onChanged(Recycling responseBody) {
-                Log.d(TAG, "onChanged: this is a live data response!");
-                Log.d(TAG, "onChanged: " + responseBody.getDate());
-            }
-        });
-
+    private void registerUser() {
+        Result<User> register = loginDataSource.register();
+        if (register instanceof Result.Success) {
+            loginViewModel.postRegisterUser(((Result.Success<User>) register).getData()).observe(this,
+                    new androidx.lifecycle.Observer<User>() {
+                        @Override
+                        public void onChanged(User responseBody) {
+                            Log.d(TAG, "onChanged: this is a live data response!");
+                            Log.d(TAG, "onChanged: " + responseBody.getUsername());
+                        }
+                    });
+        }
     }
 
     private void updateUiWithUser(LoggedInUserView model) {

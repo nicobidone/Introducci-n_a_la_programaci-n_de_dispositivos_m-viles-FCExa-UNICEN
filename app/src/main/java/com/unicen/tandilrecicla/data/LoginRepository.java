@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveDataReactiveStreams;
 
 import com.unicen.tandilrecicla.data.model.LoggedInUser;
 import com.unicen.tandilrecicla.data.model.Recycling;
+import com.unicen.tandilrecicla.data.model.User;
 import com.unicen.tandilrecicla.data.remote.ServiceGenerator;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -39,17 +40,25 @@ public class LoginRepository {
         return instance;
     }
 
-    public LiveData<ResponseBody> makeReactiveQuery(String id) {
+    public LiveData<ResponseBody> getTotalRecyclingQuery(String id) {
         return LiveDataReactiveStreams
                 .fromPublisher(ServiceGenerator.getRequestApi()
-                        .makeQuery(id)
+                        .getTotalRecycling(id)
                         .subscribeOn(Schedulers.io()));
     }
 
-    public LiveData<Recycling> postReactiveQuery(String id, Recycling recycling) {
+    public LiveData<Recycling> postRegisterRecyclingQuery(String id, Recycling recycling) {
         return LiveDataReactiveStreams
                 .fromPublisher(ServiceGenerator.getRequestApi()
-                        .savePost(id,recycling)
+                        .postRegisterRecycling(id,recycling)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread()));
+    }
+
+    public LiveData<User> postRegisterUserQuery(User user) {
+        return LiveDataReactiveStreams
+                .fromPublisher(ServiceGenerator.getRequestApi()
+                        .postRegisterUser(user)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()));
     }
