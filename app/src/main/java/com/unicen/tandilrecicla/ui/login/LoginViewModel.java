@@ -10,6 +10,7 @@ import com.unicen.tandilrecicla.R;
 import com.unicen.tandilrecicla.data.LoginRepository;
 import com.unicen.tandilrecicla.data.Result;
 import com.unicen.tandilrecicla.data.model.LoggedInUser;
+import com.unicen.tandilrecicla.data.model.Recycling;
 
 import okhttp3.ResponseBody;
 
@@ -31,8 +32,12 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-    LiveData<ResponseBody> makeQuery() {
-        return loginRepository.makeReactiveQuery();
+    LiveData<ResponseBody> makeQuery(String id) {
+        return loginRepository.makeReactiveQuery(id);
+    }
+
+    LiveData<Recycling> postRecycling(String id, Recycling recycling) {
+        return loginRepository.postReactiveQuery(id,recycling);
     }
 
     public void login(String username, String password) {

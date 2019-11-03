@@ -1,37 +1,12 @@
 package com.unicen.tandilrecicla.data.model;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 public class Address {
-    @SerializedName("department")
-    @Expose
     private String department;
-    @SerializedName("number")
-    @Expose
     private Integer number;
-    @SerializedName("streetAddress")
-    @Expose
     private String streetAddress;
-    @SerializedName("city")
-    @Expose
     private String city;
-    @SerializedName("state")
-    @Expose
     private String state;
-    @SerializedName("zipCode")
-    @Expose
     private String zipCode;
-
-    public Address(String department, Integer number, String streetAddress, String city, String state,
-                   String zipCode) {
-        this.department = department;
-        this.number = number;
-        this.streetAddress = streetAddress;
-        this.city = city;
-        this.state = state;
-        this.zipCode = zipCode;
-    }
 
     // Getter Methods
 

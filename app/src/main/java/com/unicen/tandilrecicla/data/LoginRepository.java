@@ -4,9 +4,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
 
 import com.unicen.tandilrecicla.data.model.LoggedInUser;
-import com.unicen.tandilrecicla.data.model.RegisteredUser;
+import com.unicen.tandilrecicla.data.model.Recycling;
 import com.unicen.tandilrecicla.data.remote.ServiceGenerator;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 
@@ -15,6 +16,8 @@ import okhttp3.ResponseBody;
  * maintains an in-memory cache of login status and user credentials information.
  */
 public class LoginRepository {
+
+    private static final String TAG = "LoginRepository";
 
     private static volatile LoginRepository instance;
 
@@ -36,11 +39,19 @@ public class LoginRepository {
         return instance;
     }
 
-    public LiveData<ResponseBody> makeReactiveQuery() {
+    public LiveData<ResponseBody> makeReactiveQuery(String id) {
         return LiveDataReactiveStreams
                 .fromPublisher(ServiceGenerator.getRequestApi()
-                .makeQuery()
-                .subscribeOn(Schedulers.io()));
+                        .makeQuery(id)
+                        .subscribeOn(Schedulers.io()));
+    }
+
+    public LiveData<Recycling> postReactiveQuery(String id, Recycling recycling) {
+        return LiveDataReactiveStreams
+                .fromPublisher(ServiceGenerator.getRequestApi()
+                        .savePost(id,recycling)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread()));
     }
 
     public boolean isLoggedIn() {

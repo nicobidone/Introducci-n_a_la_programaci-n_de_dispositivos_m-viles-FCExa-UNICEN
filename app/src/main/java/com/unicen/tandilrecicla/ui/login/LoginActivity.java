@@ -24,7 +24,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.unicen.tandilrecicla.MainActivity;
 import com.unicen.tandilrecicla.R;
-import com.unicen.tandilrecicla.data.model.RegisteredUser;
+import com.unicen.tandilrecicla.data.model.Recycling;
 import com.unicen.tandilrecicla.data.remote.APIService;
 import com.unicen.tandilrecicla.data.remote.ApiUtils;
 import com.unicen.tandilrecicla.data.remote.RequestApi;
@@ -33,9 +33,6 @@ import com.unicen.tandilrecicla.data.remote.ServiceGenerator;
 import java.io.IOException;
 
 import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -141,20 +138,24 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+//        Address address = new Address();
+//        address.setDepartment("Tandil");
+//        address.setCity("Tandil");
+//        address.setNumber(874);
+//        address.setStreetAddress("Alberdi");
+//        address.setCity("Tandil");
+//        address.setState("Buenos Aires");
+//        address.setZipCode("7000");
+//        RegisteredUser registeredUser = new RegisteredUser();
+//        registeredUser.setFirstName("Mauri");
+//        registeredUser.setLastName("Arroqui");
+//        registeredUser.setMail("mauriarroqui@gmail.com");
+//        registeredUser.setUsername("marroqui2");
+//        registeredUser.setAddress(address);
 
-        sendPost("Mauri",
-                "Arroqui",
-                "mauriarroqui@gmail.com",
-                "marroqui2");
-//                new Address(
-//                        "Tandil",
-//                        874,
-//                        "Alberdi",
-//                        "Tandil",
-//                        "Buenos Aires",
-//                        "7000")));
+//        sendPost(registeredUser);
 
-        loginViewModel.makeQuery().observe(this, new androidx.lifecycle.Observer<ResponseBody>() {
+        loginViewModel.makeQuery("marroqui2").observe(this, new androidx.lifecycle.Observer<ResponseBody>() {
             @Override
             public void onChanged(ResponseBody responseBody) {
                 Log.d(TAG, "onChanged: this is a live data response!");
@@ -165,21 +166,23 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-    }
 
-    private void sendPost(String mauri, String arroqui, String s, String marroqui2) {
-        mAPIService.savePost(mauri, arroqui, s, marroqui2).enqueue(new Callback<RegisteredUser>() {
+        Recycling recycling = new Recycling();
+        recycling.setBottles(1);
+        recycling.setTetrabriks(5);
+        recycling.setGlass(3);
+        recycling.setPaperboard(4);
+        recycling.setCans(2);
+        recycling.setDate("2018-11-29");
 
+        loginViewModel.postRecycling("marroqui2",recycling).observe(this, new androidx.lifecycle.Observer<Recycling>() {
             @Override
-            public void onResponse(Call<RegisteredUser> call, Response<RegisteredUser> response) {
-                Log.i(TAG, "post completed to API.");
-            }
-
-            @Override
-            public void onFailure(Call<RegisteredUser> call, Throwable t) {
-                Log.e(TAG, "Unable to submit post to API.");
+            public void onChanged(Recycling responseBody) {
+                Log.d(TAG, "onChanged: this is a live data response!");
+                Log.d(TAG, "onChanged: " + responseBody.getDate());
             }
         });
+
     }
 
     private void updateUiWithUser(LoggedInUserView model) {

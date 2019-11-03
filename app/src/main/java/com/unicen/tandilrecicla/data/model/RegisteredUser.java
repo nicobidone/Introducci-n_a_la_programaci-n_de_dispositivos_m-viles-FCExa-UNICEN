@@ -1,25 +1,12 @@
 package com.unicen.tandilrecicla.data.model;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 public class RegisteredUser {
 
-    @SerializedName("firstName")
-    @Expose
     private String firstName;
-    @SerializedName("lastName")
-    @Expose
     private String lastName;
-    @SerializedName("mail")
-    @Expose
     private String mail;
-    @SerializedName("username")
-    @Expose
     private String username;
-//    @SerializedName("address")
-//    @Expose
-//    private Address address;
+    private Address address;
 
     // Getter Methods
 
@@ -39,9 +26,9 @@ public class RegisteredUser {
         return username;
     }
 
-//    public Address getAddress() {
-//        return address;
-//    }
+    public Address getAddress() {
+        return address;
+    }
 
     // Setter Methods
 
@@ -61,8 +48,8 @@ public class RegisteredUser {
         this.username = username;
     }
 
-//    public void setAddress(Address addressObject) {
-//        this.address = addressObject;
-//    }
+    public void setAddress(Address addressObject) {
+        this.address = addressObject;
+    }
 }
 

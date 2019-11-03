@@ -1,26 +1,20 @@
 package com.unicen.tandilrecicla.data.remote;
 
-import com.unicen.tandilrecicla.data.model.RegisteredUser;
+import com.unicen.tandilrecicla.data.model.Recycling;
 
 import io.reactivex.Flowable;
-import io.reactivex.Observable;
 import okhttp3.ResponseBody;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface RequestApi {
 
-    @GET("/todos/1")
-    Flowable<ResponseBody> makeQuery();
+    @GET("users/{id}/total/")
+    Flowable<ResponseBody> makeQuery(@Path("id") String id);
 
-    @POST("/users")
-    @FormUrlEncoded
-    Observable<RegisteredUser> savePost(@Field("firstName") String firstName,
-                                        @Field("lastName") String lastName,
-                                        @Field("mail") String mail,
-                                        @Field("username") String userName);
-
+    @POST("users/{id}/recycling/")
+    Flowable<Recycling> savePost(@Path("id") String id, @Body Recycling recycling);
 }
 
