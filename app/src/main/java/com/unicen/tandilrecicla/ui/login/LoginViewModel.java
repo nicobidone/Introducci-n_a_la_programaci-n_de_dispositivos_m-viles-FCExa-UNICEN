@@ -83,4 +83,6 @@ public class LoginViewModel extends ViewModel {
     public LiveData<RegisteredUser> postUser(RegisteredUser registeredUser) {
         return loginRepository.postUserQuery(registeredUser);
     }
+
+
 }
