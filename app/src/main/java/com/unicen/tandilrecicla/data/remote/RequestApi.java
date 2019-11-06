@@ -1,6 +1,7 @@
 package com.unicen.tandilrecicla.data.remote;
 
 import com.unicen.tandilrecicla.data.model.Recycling;
+import com.unicen.tandilrecicla.data.model.RegisteredUser;
 
 import io.reactivex.Flowable;
 import okhttp3.ResponseBody;
@@ -16,5 +17,8 @@ public interface RequestApi {
 
     @POST("users/{id}/recycling/")
     Flowable<Recycling> savePost(@Path("id") String id, @Body Recycling recycling);
+
+    @POST("users")
+    Flowable<RegisteredUser> registerPost(@Body RegisteredUser registeredUser);
 }
 

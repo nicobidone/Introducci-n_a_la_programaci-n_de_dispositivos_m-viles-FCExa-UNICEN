@@ -11,6 +11,7 @@ import com.unicen.tandilrecicla.data.LoginRepository;
 import com.unicen.tandilrecicla.data.Result;
 import com.unicen.tandilrecicla.data.model.LoggedInUser;
 import com.unicen.tandilrecicla.data.model.Recycling;
+import com.unicen.tandilrecicla.data.model.RegisteredUser;
 
 import okhttp3.ResponseBody;
 
@@ -77,5 +78,9 @@ public class LoginViewModel extends ViewModel {
     // A placeholder password validation check
     private boolean isPasswordValid(String password) {
         return password != null && password.trim().length() > 5;
+    }
+
+    public LiveData<RegisteredUser> postUser(RegisteredUser registeredUser) {
+        return loginRepository.postUserQuery(registeredUser);
     }
 }
