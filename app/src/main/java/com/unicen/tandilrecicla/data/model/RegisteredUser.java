@@ -1,6 +1,6 @@
 package com.unicen.tandilrecicla.data.model;
 
-public class User {
+public class RegisteredUser {
 
     private String firstName;
     private String lastName;

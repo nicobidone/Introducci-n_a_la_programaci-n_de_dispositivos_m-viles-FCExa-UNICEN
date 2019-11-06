@@ -24,10 +24,9 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.unicen.tandilrecicla.MainActivity;
 import com.unicen.tandilrecicla.R;
-import com.unicen.tandilrecicla.data.LoginDataSource;
-import com.unicen.tandilrecicla.data.Result;
+import com.unicen.tandilrecicla.data.model.Address;
 import com.unicen.tandilrecicla.data.model.Recycling;
-import com.unicen.tandilrecicla.data.model.User;
+import com.unicen.tandilrecicla.data.model.RegisteredUser;
 
 import java.io.IOException;
 
@@ -39,8 +38,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
 
-    private LoginDataSource loginDataSource;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,13 +46,25 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
-        final EditText usernameEditText = findViewById(R.id.username);
+        final EditText emailEditText = findViewById(R.id.email);
         final EditText passwordEditText = findViewById(R.id.password);
+        final EditText firstNameEditText = findViewById(R.id.firstName);
+        final EditText lasNameEditText = findViewById(R.id.lastName);
+        final EditText userNameEditText = findViewById(R.id.userName);
+        final EditText departmentEditText = findViewById(R.id.department);
+        final EditText numberEditText = findViewById(R.id.number);
+        final EditText streetAddressEditText = findViewById(R.id.streetAddress);
+        final EditText cityEditText = findViewById(R.id.city);
+        final EditText stateEditText = findViewById(R.id.state);
+        final EditText zipCodeEditText = findViewById(R.id.zipCode);
         final Button loginButton = findViewById(R.id.login);
         final Button registerButton = findViewById(R.id.register);
+        final Button cancelButton = findViewById(R.id.cancel);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+        final EditText[] registerFields = new EditText[]{firstNameEditText, lasNameEditText, userNameEditText, departmentEditText,
+                numberEditText, streetAddressEditText, cityEditText, stateEditText, zipCodeEditText};
+
         final Context context = this;
-        loginDataSource = new LoginDataSource();
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -65,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 loginButton.setEnabled(loginFormState.isDataValid());
                 if (loginFormState.getUsernameError() != null) {
-                    usernameEditText.setError(getString(loginFormState.getUsernameError()));
+                    emailEditText.setError(getString(loginFormState.getUsernameError()));
                 }
                 if (loginFormState.getPasswordError() != null) {
                     passwordEditText.setError(getString(loginFormState.getPasswordError()));
@@ -106,18 +115,18 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
+                loginViewModel.loginDataChanged(emailEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
         };
-        usernameEditText.addTextChangedListener(afterTextChangedListener);
+        emailEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(usernameEditText.getText().toString(),
+                    loginViewModel.login(emailEditText.getText().toString(),
                             passwordEditText.getText().toString());
                 }
                 return false;
@@ -128,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
+                loginViewModel.login(emailEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
         });
@@ -136,13 +145,29 @@ public class LoginActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                totalRecycling();
+                for (EditText element : registerFields) {
+                    element.setVisibility(View.VISIBLE);
+                }
+                cancelButton.setVisibility(View.VISIBLE);
+                loginButton.setVisibility(View.GONE);
+                firstNameEditText.requestFocus();
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (EditText element : registerFields) {
+                    element.setVisibility(View.GONE);
+                }
+                cancelButton.setVisibility(View.GONE);
+                loginButton.setVisibility(View.VISIBLE);
             }
         });
     }
 
-    private void totalRecycling() {
-        loginViewModel.getTotalRecycling("marroqui2").observe(this, new androidx.lifecycle.Observer<ResponseBody>() {
+    private void total() {
+        loginViewModel.makeQuery("marroqui2").observe(this, new androidx.lifecycle.Observer<ResponseBody>() {
             @Override
             public void onChanged(ResponseBody responseBody) {
                 Log.d(TAG, "onChanged: this is a live data response!");
@@ -153,34 +178,49 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
-    private void registerRecycling() {
-        Result<Recycling> recycle = loginDataSource.recycle();
-        if (recycle instanceof Result.Success) {
-            loginViewModel.postRegisterRecycling("marroqui2", ((Result.Success<Recycling>) recycle).getData()).observe(this,
-                    new androidx.lifecycle.Observer<Recycling>() {
-                        @Override
-                        public void onChanged(Recycling responseBody) {
-                            Log.d(TAG, "onChanged: this is a live data response!");
-                            Log.d(TAG, "onChanged: " + responseBody.getDate());
-                        }
-                    });
-        }
+    private void recycle() {
+        Recycling recycling = new Recycling();
+        recycling.setBottles(1);
+        recycling.setTetrabriks(5);
+        recycling.setGlass(3);
+        recycling.setPaperboard(4);
+        recycling.setCans(2);
+        recycling.setDate("2018-11-29");
+
+        loginViewModel.postRecycling("marroqui2", recycling).observe(this, new androidx.lifecycle.Observer<Recycling>() {
+            @Override
+            public void onChanged(Recycling responseBody) {
+                Log.d(TAG, "onChanged: this is a live data response!");
+                Log.d(TAG, "onChanged: " + responseBody.getDate());
+            }
+        });
     }
 
-    private void registerUser() {
-        Result<User> register = loginDataSource.register();
-        if (register instanceof Result.Success) {
-            loginViewModel.postRegisterUser(((Result.Success<User>) register).getData()).observe(this,
-                    new androidx.lifecycle.Observer<User>() {
-                        @Override
-                        public void onChanged(User responseBody) {
-                            Log.d(TAG, "onChanged: this is a live data response!");
-                            Log.d(TAG, "onChanged: " + responseBody.getUsername());
-                        }
-                    });
-        }
+    private void register() {
+        Address address = new Address();
+        address.setDepartment("Tandil");
+        address.setCity("Tandil");
+        address.setNumber(874);
+        address.setStreetAddress("Alberdi");
+        address.setCity("Tandil");
+        address.setState("Buenos Aires");
+        address.setZipCode("7000");
+        RegisteredUser registeredUser = new RegisteredUser();
+        registeredUser.setFirstName("Mauri");
+        registeredUser.setLastName("Arroqui");
+        registeredUser.setMail("mauriarroqui@gmail.com");
+        registeredUser.setUsername("nicob");
+        registeredUser.setAddress(address);
+
+        loginViewModel.postUser(registeredUser).observe(this, new androidx.lifecycle.Observer<RegisteredUser>() {
+            @Override
+            public void onChanged(RegisteredUser responseBody) {
+                Log.d(TAG, "POST User: this is a live data response!");
+            }
+        });
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
