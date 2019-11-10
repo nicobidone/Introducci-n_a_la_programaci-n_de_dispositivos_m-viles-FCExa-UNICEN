@@ -5,12 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -35,6 +37,7 @@ import okhttp3.ResponseBody;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
+    private static final int TEXT_PASSWORD = 129;
 
     private LoginViewModel loginViewModel;
 
@@ -50,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordEditText = findViewById(R.id.password);
         final EditText firstNameEditText = findViewById(R.id.firstName);
         final EditText lasNameEditText = findViewById(R.id.lastName);
+        final EditText emailOrUserNameEditText = findViewById(R.id.logger);
         final EditText userNameEditText = findViewById(R.id.userName);
         final EditText departmentEditText = findViewById(R.id.department);
         final EditText numberEditText = findViewById(R.id.number);
@@ -60,9 +64,10 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = findViewById(R.id.login);
         final Button registerButton = findViewById(R.id.register);
         final Button cancelButton = findViewById(R.id.cancel);
+        final CheckBox visibilityImageButton = findViewById(R.id.visibility);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
         final EditText[] registerFields = new EditText[]{firstNameEditText, lasNameEditText, userNameEditText, departmentEditText,
-                numberEditText, streetAddressEditText, cityEditText, stateEditText, zipCodeEditText};
+                emailEditText, numberEditText, streetAddressEditText, cityEditText, stateEditText, zipCodeEditText};
 
         final Context context = this;
 
@@ -74,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 loginButton.setEnabled(loginFormState.isDataValid());
                 if (loginFormState.getUsernameError() != null) {
-                    emailEditText.setError(getString(loginFormState.getUsernameError()));
+                    emailOrUserNameEditText.setError(getString(loginFormState.getUsernameError()));
                 }
                 if (loginFormState.getPasswordError() != null) {
                     passwordEditText.setError(getString(loginFormState.getPasswordError()));
@@ -115,18 +120,21 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(emailEditText.getText().toString(),
+                loginViewModel.loginDataChanged(emailOrUserNameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
         };
-        emailEditText.addTextChangedListener(afterTextChangedListener);
+
+        emailOrUserNameEditText.addTextChangedListener(afterTextChangedListener);
+
         passwordEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+        zipCodeEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(emailEditText.getText().toString(),
+                    loginViewModel.login(emailOrUserNameEditText.getText().toString(),
                             passwordEditText.getText().toString());
                 }
                 return false;
@@ -137,7 +145,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(emailEditText.getText().toString(),
+                loginViewModel.login(emailOrUserNameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
         });
@@ -145,12 +153,18 @@ public class LoginActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (EditText element : registerFields) {
-                    element.setVisibility(View.VISIBLE);
+                if (firstNameEditText.getVisibility() == View.GONE) {
+
+                    for (EditText element : registerFields) {
+                        element.setVisibility(View.VISIBLE);
+                    }
+                    cancelButton.setVisibility(View.VISIBLE);
+                    loginButton.setVisibility(View.GONE);
+                    firstNameEditText.requestFocus();
+
+                    emailOrUserNameEditText.setVisibility(View.GONE);
+                    loginViewModel.toRegister(emailOrUserNameEditText, emailEditText, userNameEditText);
                 }
-                cancelButton.setVisibility(View.VISIBLE);
-                loginButton.setVisibility(View.GONE);
-                firstNameEditText.requestFocus();
             }
         });
 
@@ -162,8 +176,26 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 cancelButton.setVisibility(View.GONE);
                 loginButton.setVisibility(View.VISIBLE);
+
+                loginViewModel.toLogin(emailOrUserNameEditText, emailEditText);
+                emailOrUserNameEditText.setVisibility(View.VISIBLE);
             }
         });
+
+        visibilityImageButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (visibilityImageButton.isChecked()) {
+                            passwordEditText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                        } else {
+                            passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                        }
+                    }
+                }
+        );
+
+
     }
 
     private void total() {

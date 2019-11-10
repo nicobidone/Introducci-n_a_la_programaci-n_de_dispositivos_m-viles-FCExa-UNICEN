@@ -11,6 +11,7 @@ public class ServiceGenerator {
 
     public static final String BASE_URL = "http://192.168.0.10:8080/api/";
 
+// Allows to set de timeout connection time
 //    private static OkHttpClient client = new OkHttpClient.Builder()
 //            .connectTimeout(60, TimeUnit.SECONDS)
 //            .readTimeout(60, TimeUnit.SECONDS).build();

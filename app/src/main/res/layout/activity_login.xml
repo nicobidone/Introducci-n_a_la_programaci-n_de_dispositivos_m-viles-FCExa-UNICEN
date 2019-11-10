@@ -48,7 +48,16 @@
                 android:ems="10"
                 android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress"
-                android:selectAllOnFocus="true" />
+                android:selectAllOnFocus="true"
+                android:visibility="gone"/>
+
+            <EditText
+                android:id="@+id/logger"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/prompt_email_or_username"
+                android:inputType="textPersonName"/>
 
             <EditText
                 android:id="@+id/userName"
@@ -59,13 +68,28 @@
                 android:inputType="textPersonName"
                 android:visibility="gone" />
 
-            <EditText
-                android:id="@+id/password"
+            <TableRow
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/prompt_password"
-                android:inputType="textPassword" />
+                android:layout_height="match_parent" >
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="9"
+                    android:layout_marginEnd="-3dp"
+                    android:hint="@string/prompt_password"
+                    android:inputType="textPassword" />
+
+                <CheckBox
+                    android:id="@+id/visibility"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:button="@drawable/visibility_selector"
+                    android:background="@android:color/transparent"/>
+
+            </TableRow>
 
             <EditText
                 android:id="@+id/department"
@@ -119,7 +143,10 @@
                 android:layout_marginBottom="20dp"
                 android:ems="10"
                 android:hint="Zip Code"
+                android:imeActionLabel="@string/action_sign_in_short"
+                android:imeOptions="actionDone"
                 android:inputType="numberDecimal"
+                android:selectAllOnFocus="true"
                 android:visibility="gone" />
 
             <Button

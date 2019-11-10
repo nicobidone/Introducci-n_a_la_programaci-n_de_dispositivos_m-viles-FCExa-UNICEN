@@ -1,7 +1,9 @@
 package com.unicen.tandilrecicla.ui.login;
 
 import android.util.Patterns;
+import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -38,7 +40,7 @@ public class LoginViewModel extends ViewModel {
     }
 
     LiveData<Recycling> postRecycling(String id, Recycling recycling) {
-        return loginRepository.postReactiveQuery(id,recycling);
+        return loginRepository.postReactiveQuery(id, recycling);
     }
 
     public void login(String username, String password) {
@@ -85,4 +87,20 @@ public class LoginViewModel extends ViewModel {
     }
 
 
+    void toRegister(@NonNull EditText emailOrUserName, @NonNull EditText email, @NonNull EditText userName) {
+        String emailOrUserNameText = emailOrUserName.getText().toString();
+        if (emailOrUserNameText.contains("@")) {
+            email.setText(emailOrUserNameText);
+        } else {
+            userName.setText(emailOrUserNameText);
+        }
+    }
+
+
+    void toLogin(@NonNull EditText emailOrUserName, @NonNull EditText email) {
+        String emailToString = email.getText().toString();
+        if (!emailToString.isEmpty()) {
+            emailOrUserName.setText(emailToString);
+        }
+    }
 }
