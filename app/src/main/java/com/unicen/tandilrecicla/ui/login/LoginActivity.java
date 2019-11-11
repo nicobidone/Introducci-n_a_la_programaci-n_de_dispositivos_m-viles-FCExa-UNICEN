@@ -37,10 +37,8 @@ import okhttp3.ResponseBody;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
-    private static final int TEXT_PASSWORD = 129;
 
     private LoginViewModel loginViewModel;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -134,8 +132,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(emailOrUserNameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
+                    register();
                 }
                 return false;
             }
@@ -164,6 +161,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     emailOrUserNameEditText.setVisibility(View.GONE);
                     loginViewModel.toRegister(emailOrUserNameEditText, emailEditText, userNameEditText);
+                } else {
+                    register();
                 }
             }
         });
@@ -191,47 +190,13 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                         }
+                        passwordEditText.setSelection(passwordEditText.getText().toString().length());
                     }
                 }
         );
-
-
     }
 
-    private void total() {
-        loginViewModel.makeQuery("marroqui2").observe(this, new androidx.lifecycle.Observer<ResponseBody>() {
-            @Override
-            public void onChanged(ResponseBody responseBody) {
-                Log.d(TAG, "onChanged: this is a live data response!");
-                try {
-                    Log.d(TAG, "onChanged: " + responseBody.string());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-    }
-
-    private void recycle() {
-        Recycling recycling = new Recycling();
-        recycling.setBottles(1);
-        recycling.setTetrabriks(5);
-        recycling.setGlass(3);
-        recycling.setPaperboard(4);
-        recycling.setCans(2);
-        recycling.setDate("2018-11-29");
-
-        loginViewModel.postRecycling("marroqui2", recycling).observe(this, new androidx.lifecycle.Observer<Recycling>() {
-            @Override
-            public void onChanged(Recycling responseBody) {
-                Log.d(TAG, "onChanged: this is a live data response!");
-                Log.d(TAG, "onChanged: " + responseBody.getDate());
-            }
-        });
-    }
-
-    private void register() {
+    private RegisteredUser getRegisteredUser() {
         Address address = new Address();
         address.setDepartment("Tandil");
         address.setCity("Tandil");
@@ -246,8 +211,12 @@ public class LoginActivity extends AppCompatActivity {
         registeredUser.setMail("mauriarroqui@gmail.com");
         registeredUser.setUsername("nicob");
         registeredUser.setAddress(address);
+        return registeredUser;
+    }
 
-        loginViewModel.postUser(registeredUser).observe(this, new androidx.lifecycle.Observer<RegisteredUser>() {
+    private void register() {
+
+        loginViewModel.postUser(getRegisteredUser()).observe(this, new androidx.lifecycle.Observer<RegisteredUser>() {
             @Override
             public void onChanged(RegisteredUser responseBody) {
                 Log.d(TAG, "POST User: this is a live data response!");

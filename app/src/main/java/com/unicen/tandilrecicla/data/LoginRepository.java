@@ -4,13 +4,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
 
 import com.unicen.tandilrecicla.data.model.LoggedInUser;
-import com.unicen.tandilrecicla.data.model.Recycling;
 import com.unicen.tandilrecicla.data.model.RegisteredUser;
 import com.unicen.tandilrecicla.data.remote.ServiceGenerator;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.ResponseBody;
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -39,28 +37,27 @@ public class LoginRepository {
         }
         return instance;
     }
-
-    public LiveData<ResponseBody> makeReactiveQuery(String id) {
-        return LiveDataReactiveStreams
-                .fromPublisher(ServiceGenerator.getRequestApi()
-                        .makeQuery(id)
-                        .subscribeOn(Schedulers.io()));
-    }
-
-    public LiveData<Recycling> postReactiveQuery(String id, Recycling recycling) {
-        return LiveDataReactiveStreams
-                .fromPublisher(ServiceGenerator.getRequestApi()
-                        .savePost(id,recycling)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread()));
-    }
+//
+//    public LiveData<Recycling> postReactiveQuery(String id, Recycling recycling) {
+//        return LiveDataReactiveStreams
+//                .fromPublisher(ServiceGenerator.getRequestApi()
+//                        .savePost(id, recycling)
+//                        .subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread()));
+//    }
 
     public LiveData<RegisteredUser> postUserQuery(RegisteredUser registeredUser) {
-        return LiveDataReactiveStreams
-                .fromPublisher(ServiceGenerator.getRequestApi()
-                        .registerPost(registeredUser)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread()));
+        LiveData<RegisteredUser> registeredUserLiveData;
+        try {
+            registeredUserLiveData = LiveDataReactiveStreams
+                    .fromPublisher(ServiceGenerator.getRequestApi()
+                            .registerPost(registeredUser)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread()));
+        } catch (Exception e) {
+            return null;
+        }
+        return registeredUserLiveData;
     }
 
     public boolean isLoggedIn() {

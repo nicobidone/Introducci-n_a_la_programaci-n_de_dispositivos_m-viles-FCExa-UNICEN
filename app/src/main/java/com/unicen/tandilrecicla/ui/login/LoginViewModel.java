@@ -35,13 +35,9 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-    LiveData<ResponseBody> makeQuery(String id) {
-        return loginRepository.makeReactiveQuery(id);
-    }
-
-    LiveData<Recycling> postRecycling(String id, Recycling recycling) {
-        return loginRepository.postReactiveQuery(id, recycling);
-    }
+//    LiveData<Recycling> postRecycling(String id, Recycling recycling) {
+//        return loginRepository.postReactiveQuery(id, recycling);
+//    }
 
     public void login(String username, String password) {
         // can be launched in a separate asynchronous job
@@ -82,7 +78,7 @@ public class LoginViewModel extends ViewModel {
         return password != null && password.trim().length() > 5;
     }
 
-    public LiveData<RegisteredUser> postUser(RegisteredUser registeredUser) {
+    LiveData<RegisteredUser> postUser(RegisteredUser registeredUser) {
         return loginRepository.postUserQuery(registeredUser);
     }
 

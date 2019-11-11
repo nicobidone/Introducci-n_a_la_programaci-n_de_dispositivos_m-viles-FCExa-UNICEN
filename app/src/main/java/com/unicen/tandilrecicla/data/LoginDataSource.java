@@ -25,27 +25,28 @@ public class LoginDataSource {
         }
     }
 
-//    public Result<RegisteredUser> register() {
-//        try {
-            // TODO: handle loggedInUser authentication
-//            RegisteredUser fakeUser =
-//                    new RegisteredUser(
-//                            "Mauri",
-//                            "Arroqui",
-//                            "mauriarroqui@gmail.com",
-//                            "marroqui2",
-//                            new Address(
-//                                    "Tandil",
-//                                    874,
-//                                    "Alberdi",
-//                                    "Tandil",
-//                                    "Buenos Aires",
-//                                    "7000"));
-//            return new Result.Success<>(fakeUser);
-//        } catch (Exception e) {
-//            return new Result.Error(new IOException("Error logging in", e));
-//        }
-//    }
+    public Result<RegisteredUser> register() {
+        try {
+//             TODO: handle loggedInUser authentication
+            Address address = new Address();
+            address.setDepartment("Tandil");
+            address.setCity("Tandil");
+            address.setNumber(874);
+            address.setStreetAddress("Alberdi");
+            address.setCity("Tandil");
+            address.setState("Buenos Aires");
+            address.setZipCode("7000");
+            RegisteredUser registeredUser = new RegisteredUser();
+            registeredUser.setFirstName("Mauri");
+            registeredUser.setLastName("Arroqui");
+            registeredUser.setMail("mauriarroqui@gmail.com");
+            registeredUser.setUsername("nicob");
+            registeredUser.setAddress(address);
+            return new Result.Success<>(registeredUser);
+        } catch (Exception e) {
+            return new Result.Error(new IOException("Error logging in", e));
+        }
+    }
 
     public void logout() {
         // TODO: revoke authentication

@@ -1,0 +1,34 @@
+package com.unicen.tandilrecicla.data;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.LiveDataReactiveStreams;
+
+import com.unicen.tandilrecicla.data.model.Recycling;
+import com.unicen.tandilrecicla.data.remote.ServiceGenerator;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
+public class DashboardRepository {
+
+    private static volatile DashboardRepository instance;
+
+    private DashboardRepository() {
+    }
+
+    public static DashboardRepository getInstance() {
+        if (instance == null) {
+            instance = new DashboardRepository();
+        }
+        return instance;
+    }
+
+    public LiveData<Recycling> postReactiveQuery(String id, Recycling recycling) {
+        return LiveDataReactiveStreams
+                .fromPublisher(ServiceGenerator.getRequestApi()
+                        .savePost(id, recycling)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread()));
+    }
+}
+
