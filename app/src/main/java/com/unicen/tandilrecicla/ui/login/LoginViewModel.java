@@ -35,10 +35,6 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-//    LiveData<Recycling> postRecycling(String id, Recycling recycling) {
-//        return loginRepository.postReactiveQuery(id, recycling);
-//    }
-
     public void login(String username, String password) {
         // can be launched in a separate asynchronous job
         Result<LoggedInUser> result = loginRepository.login(username, password);
@@ -82,7 +78,6 @@ public class LoginViewModel extends ViewModel {
         return loginRepository.postUserQuery(registeredUser);
     }
 
-
     void toRegister(@NonNull EditText emailOrUserName, @NonNull EditText email, @NonNull EditText userName) {
         String emailOrUserNameText = emailOrUserName.getText().toString();
         if (emailOrUserNameText.contains("@")) {
@@ -91,7 +86,6 @@ public class LoginViewModel extends ViewModel {
             userName.setText(emailOrUserNameText);
         }
     }
-
 
     void toLogin(@NonNull EditText emailOrUserName, @NonNull EditText email) {
         String emailToString = email.getText().toString();

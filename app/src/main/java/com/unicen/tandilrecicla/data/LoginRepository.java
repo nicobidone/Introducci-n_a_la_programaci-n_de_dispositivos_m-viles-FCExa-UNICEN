@@ -37,14 +37,6 @@ public class LoginRepository {
         }
         return instance;
     }
-//
-//    public LiveData<Recycling> postReactiveQuery(String id, Recycling recycling) {
-//        return LiveDataReactiveStreams
-//                .fromPublisher(ServiceGenerator.getRequestApi()
-//                        .savePost(id, recycling)
-//                        .subscribeOn(Schedulers.io())
-//                        .observeOn(AndroidSchedulers.mainThread()));
-//    }
 
     public LiveData<RegisteredUser> postUserQuery(RegisteredUser registeredUser) {
         LiveData<RegisteredUser> registeredUserLiveData;
