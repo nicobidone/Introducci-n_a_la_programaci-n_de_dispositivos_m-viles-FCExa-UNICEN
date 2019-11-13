@@ -12,10 +12,7 @@ import com.unicen.tandilrecicla.R;
 import com.unicen.tandilrecicla.data.LoginRepository;
 import com.unicen.tandilrecicla.data.Result;
 import com.unicen.tandilrecicla.data.model.LoggedInUser;
-import com.unicen.tandilrecicla.data.model.Recycling;
 import com.unicen.tandilrecicla.data.model.RegisteredUser;
-
-import okhttp3.ResponseBody;
 
 public class LoginViewModel extends ViewModel {
 
