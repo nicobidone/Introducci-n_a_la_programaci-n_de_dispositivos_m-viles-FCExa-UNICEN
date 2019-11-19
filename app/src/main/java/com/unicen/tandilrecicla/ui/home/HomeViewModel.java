@@ -14,6 +14,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.DefaultValueFormatter;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 import com.unicen.tandilrecicla.data.HomeRepository;
@@ -29,6 +30,7 @@ public class HomeViewModel extends ViewModel {
     private HomeRepository homeRepository;
 
     private PieChart chart;
+    private PieData data;
 
     private Typeface tfRegular;
     private Typeface tfLight;
@@ -51,7 +53,7 @@ public class HomeViewModel extends ViewModel {
 
         chart.setUsePercentValues(true);
         chart.getDescription().setEnabled(false);
-        chart.setExtraOffsets(5, 10, 5, 5);
+        chart.setExtraOffsets(5, 5, 5, 5);
 
         chart.setDragDecelerationFrictionCoef(0.95f);
 
@@ -133,10 +135,7 @@ public class HomeViewModel extends ViewModel {
         dataSet.setColors(colors);
         //dataSet.setSelectionShift(0f);
 
-        PieData data = new PieData(dataSet);
-//        Pie Chart with percent
-//        data.setValueFormatter(new PercentFormatter(chart));
-//        chart.setUsePercentValues(true);
+        data = new PieData(dataSet);
 
 //        Pie Chart without percent
         data.setValueFormatter(new DefaultValueFormatter(0));
@@ -159,8 +158,6 @@ public class HomeViewModel extends ViewModel {
         if (toSet && chart.isDrawSlicesUnderHoleEnabled()) {
             chart.setDrawSlicesUnderHole(false);
         }
-
-
         chart.invalidate();
     }
 
@@ -173,5 +170,16 @@ public class HomeViewModel extends ViewModel {
 
     void setPieChart(PieChart chart) {
         this.chart = chart;
+    }
+
+    void changeDisplayUserValues() {
+        boolean usePercentValuesEnabled = chart.isUsePercentValuesEnabled();
+        if (!usePercentValuesEnabled) {
+            data.setValueFormatter(new PercentFormatter(chart));
+        } else {
+            data.setValueFormatter(new DefaultValueFormatter(0));
+        }
+        chart.setUsePercentValues(!usePercentValuesEnabled);
+        chart.invalidate();
     }
 }

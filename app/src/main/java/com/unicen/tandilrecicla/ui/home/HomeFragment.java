@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -61,6 +62,14 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         chart.setOnChartValueSelectedListener(this);
         homeViewModel.setPieChart(chart);
         homeViewModel.setChartConfiguration(chart);
+
+        ImageButton centerIcon = getActivity().findViewById(R.id.center_icon);
+        centerIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                homeViewModel.changeDisplayUserValues();
+            }
+        });
     }
 
     @Override
