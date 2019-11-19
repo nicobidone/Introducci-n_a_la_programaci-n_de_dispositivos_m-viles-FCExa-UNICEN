@@ -27,12 +27,9 @@ import androidx.lifecycle.ViewModelProviders;
 import com.unicen.tandilrecicla.MainActivity;
 import com.unicen.tandilrecicla.R;
 import com.unicen.tandilrecicla.data.model.Address;
-import com.unicen.tandilrecicla.data.model.Recycling;
 import com.unicen.tandilrecicla.data.model.RegisteredUser;
 
-import java.io.IOException;
-
-import okhttp3.ResponseBody;
+import static com.unicen.tandilrecicla.data.model.Utils.getRegisteredUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -44,8 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
-                .get(LoginViewModel.class);
+        loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory()).get(LoginViewModel.class);
 
         final EditText emailEditText = findViewById(R.id.email);
         final EditText passwordEditText = findViewById(R.id.password);
@@ -194,24 +190,6 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
         );
-    }
-
-    private RegisteredUser getRegisteredUser() {
-        Address address = new Address();
-        address.setDepartment("Tandil");
-        address.setCity("Tandil");
-        address.setNumber(874);
-        address.setStreetAddress("Alberdi");
-        address.setCity("Tandil");
-        address.setState("Buenos Aires");
-        address.setZipCode("7000");
-        RegisteredUser registeredUser = new RegisteredUser();
-        registeredUser.setFirstName("Mauri");
-        registeredUser.setLastName("Arroqui");
-        registeredUser.setMail("mauriarroqui@gmail.com");
-        registeredUser.setUsername("nicob");
-        registeredUser.setAddress(address);
-        return registeredUser;
     }
 
     private void register() {

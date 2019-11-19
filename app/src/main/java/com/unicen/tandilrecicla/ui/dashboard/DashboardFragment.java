@@ -16,14 +16,16 @@ import androidx.lifecycle.ViewModelProviders;
 import com.unicen.tandilrecicla.R;
 import com.unicen.tandilrecicla.data.model.Recycling;
 
+import static com.unicen.tandilrecicla.data.model.Utils.getRecycling;
+
 public class DashboardFragment extends Fragment {
 
     private static final String TAG = "DashboardFragment";
 
     private DashboardViewModel dashboardViewModel;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         dashboardViewModel = ViewModelProviders.of(this, new DashboardViewModelFactory()).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
         final TextView textView = root.findViewById(R.id.text_dashboard);
@@ -44,19 +46,7 @@ public class DashboardFragment extends Fragment {
         recycle();
     }
 
-    private Recycling getRecycling() {
-        Recycling recycling = new Recycling();
-        recycling.setBottles(1);
-        recycling.setTetrabriks(5);
-        recycling.setGlass(3);
-        recycling.setPaperboard(4);
-        recycling.setCans(2);
-        recycling.setDate("2018-11-29");
-        return recycling;
-    }
-
     private void recycle() {
-
         dashboardViewModel.postRecycling("marroqui2", getRecycling()).observe(this, new androidx.lifecycle.Observer<Recycling>() {
             @Override
             public void onChanged(Recycling responseBody) {
