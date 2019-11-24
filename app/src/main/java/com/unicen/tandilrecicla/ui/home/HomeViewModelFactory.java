@@ -6,10 +6,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.unicen.tandilrecicla.data.HomeRepository;
 
-/**
- * ViewModel provider factory to instantiate LoginViewModel.
- * Required given LoginViewModel has a non-empty constructor
- */
 public class HomeViewModelFactory implements ViewModelProvider.Factory {
 
     @NonNull

@@ -44,7 +44,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         Log.d(TAG, "onBindViewHolder: called.");
 
-        holder.textQuantity.setText(((DashboardViewModel)viewModel).getRecyclingQuantity(position));
+        holder.textQuantity.setText(((DashboardViewModel) viewModel).getRecyclingQuantity(position));
         holder.imageView.setBackgroundColor(mColors[position]);
         holder.imageButtonPlus.setImageResource(mImages[position]);
         holder.imageButtonMinus.setImageResource(mGrayImages[position]);
@@ -54,7 +54,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onClick(View v) {
                 Log.d(TAG, "onClick: imageButtonPlus");
                 ((DashboardViewModel) viewModel).addQuantity(position, 1);
-                holder.textQuantity.setText(((DashboardViewModel)viewModel).getRecyclingQuantity(position));
+                holder.textQuantity.setText(((DashboardViewModel) viewModel).getRecyclingQuantity(position));
             }
         });
         holder.imageButtonMinus.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +62,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onClick(View v) {
                 Log.d(TAG, "onClick: imageButtonMinus");
                 ((DashboardViewModel) viewModel).removeQuantity(position, 1);
-                holder.textQuantity.setText(((DashboardViewModel)viewModel).getRecyclingQuantity(position));
+                holder.textQuantity.setText(((DashboardViewModel) viewModel).getRecyclingQuantity(position));
             }
         });
     }
@@ -83,12 +83,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageButtonMinus = itemView.findViewById(R.id.list_item_left_image);
-            imageButtonPlus = itemView.findViewById(R.id.list_item_right_image);
-            constraintLayout = itemView.findViewById(R.id.list_item_parent_layout);
-            textName = itemView.findViewById(R.id.list_item_name);
-            textQuantity = itemView.findViewById(R.id.list_item_quantity);
-            imageView = itemView.findViewById(R.id.myRectangleView);
+            imageButtonMinus = itemView.findViewById(R.id.layout_list_item_button_left_icon);
+            imageButtonPlus = itemView.findViewById(R.id.layout_list_item_button_right_icon);
+            constraintLayout = itemView.findViewById(R.id.layout_list_item_parent);
+            textName = itemView.findViewById(R.id.layout_list_item_text_name);
+            textQuantity = itemView.findViewById(R.id.layout_list_item_text_quantity);
+            imageView = itemView.findViewById(R.id.layout_list_item_background);
         }
     }
 }

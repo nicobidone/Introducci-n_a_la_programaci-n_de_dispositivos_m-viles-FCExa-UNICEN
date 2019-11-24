@@ -49,12 +49,12 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        PieChart chart = getActivity().findViewById(R.id.chart1);
+        PieChart chart = getActivity().findViewById(R.id.fragment_home_pie_chart);
         chart.setOnChartValueSelectedListener(this);
         homeViewModel.setPieChart(chart);
         homeViewModel.setChartConfiguration(chart);
 
-        ImageButton centerIcon = getActivity().findViewById(R.id.center_icon);
+        ImageButton centerIcon = getActivity().findViewById(R.id.fragment_home_center_button);
         centerIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

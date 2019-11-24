@@ -1,36 +1,31 @@
 package com.unicen.tandilrecicla.ui.dashboard;
 
+import android.util.SparseIntArray;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.unicen.tandilrecicla.data.DashboardRepository;
 import com.unicen.tandilrecicla.data.model.Recycling;
 
-import java.util.HashMap;
-import java.util.Map;
-
 class DashboardViewModel extends ViewModel {
 
-    private Map<Integer, Integer> quantity;
+    private SparseIntArray quantity;
 
     private DashboardRepository dashboardRepository;
 
     DashboardViewModel(DashboardRepository dashboardRepository) {
-        quantity = new HashMap<>();
+        quantity = new SparseIntArray();
         this.dashboardRepository = dashboardRepository;
     }
 
     String getRecyclingQuantity(Integer position) {
-        Integer integer = quantity.get(position);
-        if (integer == null) {
-            integer = 0;
-        }
-        return integer.toString();
+        return String.valueOf(quantity.get(position));
     }
 
     void addQuantity(Integer position, Integer integer) {
         Integer val = quantity.get(position);
-        if (val != null) {
+        if (val != 0) {
             quantity.put(position, val + integer);
         } else {
             quantity.put(position, 1);
@@ -39,17 +34,13 @@ class DashboardViewModel extends ViewModel {
 
     void removeQuantity(Integer position, Integer integer) {
         Integer val = quantity.get(position);
-        if (val != null && val > 0) {
+        if (val > 0) {
             quantity.put(position, val - integer);
-        } else {
-            quantity.put(position, 0);
         }
     }
 
-    void clearRecyclingQuantities(){
-        for ( Integer key : quantity.keySet()){
-            quantity.remove(key);
-        }
+    void clearRecyclingQuantities() {
+        quantity.clear();
     }
 
     LiveData<Recycling> postRecycling(String id, Recycling recycling) {

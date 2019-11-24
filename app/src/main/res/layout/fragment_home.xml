@@ -5,17 +5,17 @@
     android:layout_height="match_parent">
 
     <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/chart1"
+        android:id="@+id/fragment_home_pie_chart"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <ImageButton
-        android:id="@+id/center_icon"
-        android:src="@drawable/ic_reclycle_earth"
-        android:scaleType="fitXY"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:id="@+id/fragment_home_center_button"
+        android:layout_width="@dimen/fragment_home_button_size"
+        android:layout_height="@dimen/fragment_home_button_size"
         android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_recycle_earth"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

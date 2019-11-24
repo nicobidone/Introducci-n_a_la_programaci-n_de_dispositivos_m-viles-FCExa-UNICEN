@@ -15,16 +15,13 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 import com.unicen.tandilrecicla.data.HomeRepository;
 import com.unicen.tandilrecicla.data.model.Utils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.ResponseBody;
-import okhttp3.internal.Util;
 
 public class HomeViewModel extends ViewModel {
 

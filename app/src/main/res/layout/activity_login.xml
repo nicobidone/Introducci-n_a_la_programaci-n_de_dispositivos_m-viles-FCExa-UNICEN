@@ -8,11 +8,10 @@
     tools:context=".ui.login.LoginActivity">
 
     <ScrollView
-        android:id="@+id/nsScroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="@dimen/main_margin_extended"
+        android:layout_marginBottom="@dimen/main_margin_extended"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -21,128 +20,128 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="@dimen/activity_vertical_margin">
+            android:padding="@dimen/main_margin">
 
             <EditText
-                android:id="@+id/firstName"
+                android:id="@+id/activity_login_text_first_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="First Name"
+                android:hint="@string/activity_login_hint_first_name"
                 android:inputType="textPersonName"
                 android:visibility="gone" />
 
             <EditText
-                android:id="@+id/lastName"
+                android:id="@+id/activity_login_text_last_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Last Name"
+                android:hint="@string/activity_login_hint_last_name"
                 android:inputType="textPersonName"
                 android:visibility="gone" />
 
             <EditText
-                android:id="@+id/email"
+                android:id="@+id/activity_login_text_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress"
                 android:selectAllOnFocus="true"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <EditText
-                android:id="@+id/logger"
+                android:id="@+id/activity_login_text_logger"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/prompt_email_or_username"
-                android:inputType="textPersonName"/>
+                android:hint="@string/activity_login_hint_email_or_username"
+                android:inputType="textPersonName" />
 
             <EditText
-                android:id="@+id/userName"
+                android:id="@+id/activity_login_text_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="User Name"
+                android:hint="@string/activity_login_hint_user_name"
                 android:inputType="textPersonName"
                 android:visibility="gone" />
 
             <TableRow
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent">
 
                 <EditText
-                    android:id="@+id/password"
+                    android:id="@+id/activity_login_text_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/corrected_margin"
                     android:ems="9"
-                    android:layout_marginEnd="-3dp"
                     android:hint="@string/prompt_password"
                     android:inputType="textPassword" />
 
                 <CheckBox
-                    android:id="@+id/visibility"
+                    android:id="@+id/activity_login_text_visibility"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:button="@drawable/visibility_selector"
-                    android:background="@android:color/transparent"/>
+                    android:background="@android:color/transparent"
+                    android:button="@drawable/visibility_selector" />
 
             </TableRow>
 
             <EditText
-                android:id="@+id/department"
+                android:id="@+id/activity_login_text_department"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Department"
+                android:hint="@string/activity_login_hint_department"
                 android:inputType="textPersonName"
                 android:visibility="gone" />
 
             <EditText
-                android:id="@+id/number"
+                android:id="@+id/activity_login_text_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Number"
+                android:hint="@string/activity_login_hint_number"
                 android:inputType="numberDecimal"
                 android:visibility="gone" />
 
             <EditText
-                android:id="@+id/streetAddress"
+                android:id="@+id/activity_login_text_street_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Street Address"
+                android:hint="@string/activity_login_hint_street_address"
                 android:inputType="textPersonName"
                 android:visibility="gone" />
 
             <EditText
-                android:id="@+id/city"
+                android:id="@+id/activity_login_text_city"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="City"
+                android:hint="@string/activity_login_hint_city"
                 android:inputType="textPersonName"
                 android:visibility="gone" />
 
             <EditText
-                android:id="@+id/state"
+                android:id="@+id/activity_login_text_state"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="State"
+                android:hint="@string/activity_login_hint_state"
                 android:inputType="textPersonName"
                 android:visibility="gone" />
 
             <EditText
-                android:id="@+id/zipCode"
+                android:id="@+id/activity_login_text_zip_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="@dimen/main_margin_extended"
                 android:ems="10"
-                android:hint="Zip Code"
+                android:hint="@string/activity_login_hint_zip_code"
                 android:imeActionLabel="@string/action_sign_in_short"
                 android:imeOptions="actionDone"
                 android:inputType="numberDecimal"
@@ -150,27 +149,27 @@
                 android:visibility="gone" />
 
             <Button
-                android:id="@+id/login"
+                android:id="@+id/activity_login_button_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:enabled="false"
-                android:text="@string/action_sign_in" />
+                android:text="@string/activity_login_button_text_sign_in" />
 
             <Button
-                android:id="@+id/register"
+                android:id="@+id/activity_login_button_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Register" />
+                android:text="@string/activity_login_button_text_register" />
 
             <Button
-                android:id="@+id/cancel"
+                android:id="@+id/activity_login_button_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="cancel"
+                android:text="@string/activity_login_button_text_cancel"
                 android:visibility="gone" />
 
             <ProgressBar
-                android:id="@+id/loading"
+                android:id="@+id/activity_login_button_loading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -178,8 +177,5 @@
                 app:layout_constraintVertical_bias="0.3" />
 
         </LinearLayout>
-
     </ScrollView>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

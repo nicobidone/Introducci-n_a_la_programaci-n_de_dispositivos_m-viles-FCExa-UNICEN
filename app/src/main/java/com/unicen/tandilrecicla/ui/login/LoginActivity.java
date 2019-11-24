@@ -26,7 +26,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.unicen.tandilrecicla.MainActivity;
 import com.unicen.tandilrecicla.R;
-import com.unicen.tandilrecicla.data.model.Address;
 import com.unicen.tandilrecicla.data.model.RegisteredUser;
 
 import static com.unicen.tandilrecicla.data.model.Utils.getRegisteredUser;
@@ -43,23 +42,23 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory()).get(LoginViewModel.class);
 
-        final EditText emailEditText = findViewById(R.id.email);
-        final EditText passwordEditText = findViewById(R.id.password);
-        final EditText firstNameEditText = findViewById(R.id.firstName);
-        final EditText lasNameEditText = findViewById(R.id.lastName);
-        final EditText emailOrUserNameEditText = findViewById(R.id.logger);
-        final EditText userNameEditText = findViewById(R.id.userName);
-        final EditText departmentEditText = findViewById(R.id.department);
-        final EditText numberEditText = findViewById(R.id.number);
-        final EditText streetAddressEditText = findViewById(R.id.streetAddress);
-        final EditText cityEditText = findViewById(R.id.city);
-        final EditText stateEditText = findViewById(R.id.state);
-        final EditText zipCodeEditText = findViewById(R.id.zipCode);
-        final Button loginButton = findViewById(R.id.login);
-        final Button registerButton = findViewById(R.id.register);
-        final Button cancelButton = findViewById(R.id.cancel);
-        final CheckBox visibilityImageButton = findViewById(R.id.visibility);
-        final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+        final EditText emailEditText = findViewById(R.id.activity_login_text_email);
+        final EditText passwordEditText = findViewById(R.id.activity_login_text_password);
+        final EditText firstNameEditText = findViewById(R.id.activity_login_text_first_name);
+        final EditText lasNameEditText = findViewById(R.id.activity_login_text_last_name);
+        final EditText emailOrUserNameEditText = findViewById(R.id.activity_login_text_logger);
+        final EditText userNameEditText = findViewById(R.id.activity_login_text_user_name);
+        final EditText departmentEditText = findViewById(R.id.activity_login_text_department);
+        final EditText numberEditText = findViewById(R.id.activity_login_text_number);
+        final EditText streetAddressEditText = findViewById(R.id.activity_login_text_street_address);
+        final EditText cityEditText = findViewById(R.id.activity_login_text_city);
+        final EditText stateEditText = findViewById(R.id.activity_login_text_state);
+        final EditText zipCodeEditText = findViewById(R.id.activity_login_text_zip_code);
+        final Button loginButton = findViewById(R.id.activity_login_button_login);
+        final Button registerButton = findViewById(R.id.activity_login_button_register);
+        final Button cancelButton = findViewById(R.id.activity_login_button_cancel);
+        final CheckBox visibilityImageButton = findViewById(R.id.activity_login_text_visibility);
+        final ProgressBar loadingProgressBar = findViewById(R.id.activity_login_button_loading);
         final EditText[] registerFields = new EditText[]{firstNameEditText, lasNameEditText, userNameEditText, departmentEditText,
                 emailEditText, numberEditText, streetAddressEditText, cityEditText, stateEditText, zipCodeEditText};
 

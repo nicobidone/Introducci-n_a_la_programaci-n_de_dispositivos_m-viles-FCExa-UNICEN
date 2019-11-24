@@ -32,7 +32,6 @@ public class DashboardFragment extends Fragment {
     private int[] mColors;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         dashboardViewModel = ViewModelProviders.of(this, new DashboardViewModelFactory()).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
         return root;
@@ -44,8 +43,8 @@ public class DashboardFragment extends Fragment {
         initImageMaps();
         initRecyclerView();
 
-        ImageButton imageButtonDiscard = getActivity().findViewById(R.id.discard);
-        ImageButton imageButtonRecycle = getActivity().findViewById(R.id.recycle);
+        ImageButton imageButtonDiscard = getActivity().findViewById(R.id.fragment_dashboard_button_discard);
+        ImageButton imageButtonRecycle = getActivity().findViewById(R.id.fragment_dashboard_button_recycle);
         imageButtonRecycle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,6 +54,7 @@ public class DashboardFragment extends Fragment {
         imageButtonDiscard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dashboardViewModel.clearRecyclingQuantities();
                 initRecyclerView();
             }
         });
@@ -70,7 +70,7 @@ public class DashboardFragment extends Fragment {
 
     private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView: Init recyclerView");
-        RecyclerView recyclerView = getActivity().findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = getActivity().findViewById(R.id.fragment_dashboard_recycler_view);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(mNames, mIcons, mGreyIcons, mColors, dashboardViewModel);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
