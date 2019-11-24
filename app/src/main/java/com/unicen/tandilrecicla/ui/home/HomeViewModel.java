@@ -18,10 +18,13 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 import com.unicen.tandilrecicla.data.HomeRepository;
+import com.unicen.tandilrecicla.data.model.Utils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.ResponseBody;
+import okhttp3.internal.Util;
 
 public class HomeViewModel extends ViewModel {
 
@@ -113,26 +116,7 @@ public class HomeViewModel extends ViewModel {
 
         // add a lot of colors
 
-        ArrayList<Integer> colors = new ArrayList<>();
-
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
-            colors.add(c);
-//
-//        for (int c : ColorTemplate.JOYFUL_COLORS)
-//            colors.add(c);
-//
-//        for (int c : ColorTemplate.COLORFUL_COLORS)
-//            colors.add(c);
-//
-//        for (int c : ColorTemplate.LIBERTY_COLORS)
-//            colors.add(c);
-//
-//        for (int c : ColorTemplate.PASTEL_COLORS)
-//            colors.add(c);
-
-        colors.add(ColorTemplate.getHoloBlue());
-
-        dataSet.setColors(colors);
+        dataSet.setColors(Utils.getVordiplomColors());
         //dataSet.setSelectionShift(0f);
 
         data = new PieData(dataSet);
@@ -161,7 +145,7 @@ public class HomeViewModel extends ViewModel {
         chart.invalidate();
     }
 
-    private final String[] parties = new String[]{"Bottles", "Tetrabriks", "Glass", "Paperboard", "Cans"};
+    private final String[] parties = Utils.getRecyclingNames();
 
     void setTypefaces(Typeface tfRegular, Typeface tfLight) {
         this.tfRegular = tfRegular;

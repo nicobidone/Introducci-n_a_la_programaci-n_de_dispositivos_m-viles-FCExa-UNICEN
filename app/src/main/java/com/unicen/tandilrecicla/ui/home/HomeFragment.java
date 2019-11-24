@@ -38,26 +38,17 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
                 Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf"));
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-
-//        final TextView textView = root.findViewById(R.id.text_home);
-//        homeViewModel.getText().observe(this, new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
-
         if (getActivity().getWindow() != null) {
             getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
+
+//        total();
         return root;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-//        total();
         PieChart chart = getActivity().findViewById(R.id.chart1);
         chart.setOnChartValueSelectedListener(this);
         homeViewModel.setPieChart(chart);

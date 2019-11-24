@@ -11,6 +11,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class DashboardRepository {
 
+    private static final String TAG = "DashboardRepository";
+
     private static volatile DashboardRepository instance;
 
     private DashboardRepository() {
