@@ -8,12 +8,12 @@
         android:id="@+id/fragment_notifications_text_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/main_margin"
         android:fontFamily="@font/open_sans_regular"
+        android:padding="@dimen/main_margin"
         android:text="@string/fragment_notifications_text_title"
+        android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/fragment_title_size_portrait"
-        android:textAlignment="center"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
