@@ -10,7 +10,6 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -30,37 +29,33 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
 
     private HomeViewModel homeViewModel;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         homeViewModel = ViewModelProviders.of(this, new HomeViewModelFactory()).get(HomeViewModel.class);
-        homeViewModel.setTypefaces(Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Regular.ttf"),
-                Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf"));
+        if (getActivity() != null) {
+            homeViewModel.setTypefaces(Typeface.createFromAsset(getActivity().getAssets(), "open_sans_regular.ttf"),
+                    Typeface.createFromAsset(getActivity().getAssets(), "open_sans_light.ttf"));
+        }
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         if (getActivity().getWindow() != null) {
             getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
+        PieChart chart = root.findViewById(R.id.fragment_home_pie_chart);
+        ImageButton centerIcon = root.findViewById(R.id.fragment_home_center_button);
 
-//        total();
-        return root;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        PieChart chart = getActivity().findViewById(R.id.fragment_home_pie_chart);
         chart.setOnChartValueSelectedListener(this);
         homeViewModel.setPieChart(chart);
         homeViewModel.setChartConfiguration(chart);
-
-        ImageButton centerIcon = getActivity().findViewById(R.id.fragment_home_center_button);
         centerIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 homeViewModel.changeDisplayUserValues();
             }
         });
+
+//        total();
+        return root;
     }
 
     @Override
@@ -76,7 +71,6 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
     public void onNothingSelected() {
         Log.i("PieChart", "nothing selected");
     }
-
 
     private void total() {
         homeViewModel.getTotalRecycling("marroqui2").observe(this, new androidx.lifecycle.Observer<ResponseBody>() {

@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,6 +26,8 @@ public class DashboardFragment extends Fragment {
 
     private DashboardViewModel dashboardViewModel;
 
+    private RecyclerView recyclerView;
+
     private String[] mNames;
     private Integer[] mIcons;
     private Integer[] mGreyIcons;
@@ -34,21 +36,18 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel = ViewModelProviders.of(this, new DashboardViewModelFactory()).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        return root;
-    }
+        recyclerView = root.findViewById(R.id.fragment_notifications_recycler_view);
+        ImageButton imageButtonDiscard = root.findViewById(R.id.fragment_dashboard_button_discard);
+        ImageButton imageButtonRecycle = root.findViewById(R.id.fragment_dashboard_button_recycle);
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         initImageMaps();
         initRecyclerView();
 
-        ImageButton imageButtonDiscard = getActivity().findViewById(R.id.fragment_dashboard_button_discard);
-        ImageButton imageButtonRecycle = getActivity().findViewById(R.id.fragment_dashboard_button_recycle);
         imageButtonRecycle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recycle();
+//                recycle();
+                Toast.makeText(getContext(),"Your recycling has been recorded!",Toast.LENGTH_LONG).show();
             }
         });
         imageButtonDiscard.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +57,8 @@ public class DashboardFragment extends Fragment {
                 initRecyclerView();
             }
         });
+
+        return root;
     }
 
     private void initImageMaps() {
@@ -70,8 +71,7 @@ public class DashboardFragment extends Fragment {
 
     private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView: Init recyclerView");
-        RecyclerView recyclerView = getActivity().findViewById(R.id.fragment_dashboard_recycler_view);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(mNames, mIcons, mGreyIcons, mColors, dashboardViewModel);
+        DashboardRecyclerViewAdapter adapter = new DashboardRecyclerViewAdapter(mNames, mIcons, mGreyIcons, mColors, dashboardViewModel);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }

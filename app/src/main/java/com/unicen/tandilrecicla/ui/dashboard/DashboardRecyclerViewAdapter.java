@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.unicen.tandilrecicla.R;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class DashboardRecyclerViewAdapter extends RecyclerView.Adapter<DashboardRecyclerViewAdapter.ViewHolder> {
 
-    private static final String TAG = "RecyclerViewAdapter";
+    private static final String TAG = "DashboardRecyclerViewAd";
 
     private String[] mNames;
     private Integer[] mImages;
@@ -24,7 +24,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private int[] mColors;
     private ViewModel viewModel;
 
-    RecyclerViewAdapter(String[] mNames, Integer[] mImages, Integer[] mGrayImages, int[] mColors, ViewModel dashboardViewModel) {
+    DashboardRecyclerViewAdapter(String[] mNames, Integer[] mImages, Integer[] mGrayImages, int[] mColors, ViewModel dashboardViewModel) {
         this.mNames = mNames;
         this.mImages = mImages;
         this.mColors = mColors;
@@ -35,7 +35,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_list_dashboard_item, parent, false);
         return new ViewHolder(view);
     }
 

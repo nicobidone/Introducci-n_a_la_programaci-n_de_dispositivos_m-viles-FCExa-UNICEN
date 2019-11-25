@@ -4,6 +4,17 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.unicen.tandilrecicla.R;
 
 public class Utils {
+
+    static public String[] getRecyclingPointsAddress() {
+        return new String[]{
+                "Estación Centro: A.Santamarina 460",
+                "Estación Oeste: Av. Lunghi 1950",
+                "Estación Norte: Darragueira y Jurado",
+                "Estación Vela: Corralon Municipal",
+                "Estación Gardey: Corralon Municipal"
+        };
+    }
+
     static public RegisteredUser getRegisteredUser() {
         Address address = new Address();
         address.setDepartment("Tandil");

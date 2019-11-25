@@ -77,4 +77,9 @@
     <string name="activity_login_button_text_sign_in">Sign in</string>
     <string name="fragment_dashboard_text_discard">Discard</string>
     <string name="fragment_dashboard_text_recycle">Recycle</string>
+
+    <string name="fragment_home_text_title">My recycling</string>
+    <string name="fragment_dashboard_text_title">New recycling</string>
+    <string name="fragment_notifications_text_title">Recycling points</string>
+    <string name="fragment_notifications_text_schedule">Schedule \n Mondays to Saturday: 7 to 15hs \n Holidays: 9 to 13hs</string>
 </resources>
