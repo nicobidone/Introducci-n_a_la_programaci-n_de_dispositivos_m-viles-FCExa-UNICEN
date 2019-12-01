@@ -2,7 +2,7 @@
     <string name="app_name">Tandil Recicla</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_clean_points">Clean points</string>
     <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -82,4 +82,5 @@
     <string name="fragment_dashboard_text_title">New recycling</string>
     <string name="fragment_notifications_text_title">Recycling points</string>
     <string name="fragment_notifications_text_schedule">Schedule \n Mondays to Saturday: 7 to 15hs \n Holidays: 9 to 13hs</string>
+    <string name="layout_list_notifications_item_preview_text">TextView</string>
 </resources>

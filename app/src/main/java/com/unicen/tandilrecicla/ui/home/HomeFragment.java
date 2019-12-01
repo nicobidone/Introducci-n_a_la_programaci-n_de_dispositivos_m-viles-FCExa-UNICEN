@@ -17,6 +17,7 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.unicen.tandilrecicla.MainActivitySharedViewModel;
 import com.unicen.tandilrecicla.R;
 
 import java.io.IOException;
@@ -29,12 +30,16 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
 
     private HomeViewModel homeViewModel;
 
+    private MainActivitySharedViewModel maSharedViewModel;
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         homeViewModel = ViewModelProviders.of(this, new HomeViewModelFactory()).get(HomeViewModel.class);
+
         if (getActivity() != null) {
             homeViewModel.setTypefaces(Typeface.createFromAsset(getActivity().getAssets(), "open_sans_regular.ttf"),
                     Typeface.createFromAsset(getActivity().getAssets(), "open_sans_light.ttf"));
+            maSharedViewModel = ViewModelProviders.of(getActivity()).get(MainActivitySharedViewModel.class);
         }
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -53,6 +58,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
                 homeViewModel.changeDisplayUserValues();
             }
         });
+
 
 //        total();
         return root;
@@ -73,7 +79,8 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
     }
 
     private void total() {
-        homeViewModel.getTotalRecycling("marroqui2").observe(this, new androidx.lifecycle.Observer<ResponseBody>() {
+        homeViewModel.getTotalRecycling(maSharedViewModel.getSelected().getValue()).observe(this,
+                new androidx.lifecycle.Observer<ResponseBody>() {
             @Override
             public void onChanged(ResponseBody responseBody) {
                 Log.d(TAG, "onChanged: this is a live data response!");

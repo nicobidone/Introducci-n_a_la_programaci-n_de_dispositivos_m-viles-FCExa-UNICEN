@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.unicen.tandilrecicla.MainActivitySharedViewModel;
 import com.unicen.tandilrecicla.R;
 import com.unicen.tandilrecicla.data.model.Recycling;
 import com.unicen.tandilrecicla.data.model.Utils;
@@ -26,6 +27,8 @@ public class DashboardFragment extends Fragment {
 
     private DashboardViewModel dashboardViewModel;
 
+    private MainActivitySharedViewModel maSharedViewModel;
+
     private RecyclerView recyclerView;
 
     private String[] mNames;
@@ -34,7 +37,13 @@ public class DashboardFragment extends Fragment {
     private int[] mColors;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         dashboardViewModel = ViewModelProviders.of(this, new DashboardViewModelFactory()).get(DashboardViewModel.class);
+
+        if (getActivity() != null) {
+            maSharedViewModel = ViewModelProviders.of(getActivity()).get(MainActivitySharedViewModel.class);
+        }
+
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
         recyclerView = root.findViewById(R.id.fragment_notifications_recycler_view);
         ImageButton imageButtonDiscard = root.findViewById(R.id.fragment_dashboard_button_discard);
@@ -47,7 +56,7 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View v) {
 //                recycle();
-                Toast.makeText(getContext(),"Your recycling has been recorded!",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Your recycling has been recorded!", Toast.LENGTH_LONG).show();
             }
         });
         imageButtonDiscard.setOnClickListener(new View.OnClickListener() {
@@ -77,12 +86,13 @@ public class DashboardFragment extends Fragment {
     }
 
     private void recycle() {
-        dashboardViewModel.postRecycling("marroqui2", getRecycling()).observe(this, new androidx.lifecycle.Observer<Recycling>() {
-            @Override
-            public void onChanged(Recycling responseBody) {
-                Log.d(TAG, "onChanged: this is a live data response!");
-                Log.d(TAG, "onChanged: " + responseBody.getDate());
-            }
-        });
+        dashboardViewModel.postRecycling(maSharedViewModel.getSelected().getValue(), getRecycling()).observe(this,
+                new androidx.lifecycle.Observer<Recycling>() {
+                    @Override
+                    public void onChanged(Recycling responseBody) {
+                        Log.d(TAG, "onChanged: this is a live data response!");
+                        Log.d(TAG, "onChanged: " + responseBody.getDate());
+                    }
+                });
     }
 }

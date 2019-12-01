@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.unicen.tandilrecicla.R;
 
+import static com.unicen.tandilrecicla.data.model.Utils.getVordiplomColors;
+
 public class NotificationsRecyclerViewAdapter extends RecyclerView.Adapter<NotificationsRecyclerViewAdapter.ViewHolder> {
 
     private static final String TAG = "NotificationsRecyclerVA";
@@ -35,6 +37,7 @@ public class NotificationsRecyclerViewAdapter extends RecyclerView.Adapter<Notif
         Log.d(TAG, "onBindViewHolder: ");
 
         holder.textDescription.setText(mPoints[position]);
+        holder.imageBackground.setColorFilter(getVordiplomColors()[position]);
     }
 
     @Override
@@ -45,6 +48,7 @@ public class NotificationsRecyclerViewAdapter extends RecyclerView.Adapter<Notif
     class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageDescription;
+        ImageView imageBackground;
         TextView textDescription;
         ConstraintLayout constraintLayout;
 
@@ -52,6 +56,7 @@ public class NotificationsRecyclerViewAdapter extends RecyclerView.Adapter<Notif
             super(itemView);
             textDescription = itemView.findViewById(R.id.layout_list_notifications_item_text);
             imageDescription = itemView.findViewById(R.id.layout_list_notifications_item_image);
+            imageBackground = itemView.findViewById(R.id.layout_list_notifications_item_image_background);
             constraintLayout = itemView.findViewById(R.id.layout_list_notifications_item_parent);
         }
     }

@@ -3,6 +3,7 @@ package com.unicen.tandilrecicla.ui.login;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -28,6 +29,9 @@ import com.unicen.tandilrecicla.MainActivity;
 import com.unicen.tandilrecicla.R;
 import com.unicen.tandilrecicla.data.model.RegisteredUser;
 
+import static com.unicen.tandilrecicla.data.Constants.FILE_NAME;
+import static com.unicen.tandilrecicla.data.Constants.KEY_LOGGED;
+import static com.unicen.tandilrecicla.data.Constants.KEY_USER;
 import static com.unicen.tandilrecicla.data.model.Utils.getRegisteredUser;
 
 public class LoginActivity extends AppCompatActivity {
@@ -35,6 +39,12 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 
     private LoginViewModel loginViewModel;
+
+    public static Intent getIntent(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        return intent;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -95,6 +105,8 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 setResult(Activity.RESULT_OK);
 
+                setSharedPreferences(emailOrUserNameEditText.getText().toString());
+
                 startActivity(new Intent(MainActivity.getIntent(context)));
                 finish();
             }
@@ -137,8 +149,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(emailOrUserNameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                loginViewModel.login(emailOrUserNameEditText.getText().toString(), passwordEditText.getText().toString());
             }
         });
 
@@ -189,6 +200,16 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    private void setSharedPreferences(String user) {
+        SharedPreferences sharedPreferences = getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(KEY_USER, user);
+        editor.putBoolean(KEY_LOGGED, true);
+
+        editor.apply();
     }
 
     private void register() {

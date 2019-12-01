@@ -15,7 +15,7 @@
         android:fontFamily="@font/open_sans_regular"
         android:text="@string/fragment_dashboard_text_title"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="@dimen/fragment_title_size_portrait"
+        android:textSize="@dimen/fragment_title_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -48,11 +48,13 @@
         android:id="@+id/fragment_dashboard_text_discard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/main_margin"
+        android:paddingTop="@dimen/main_margin"
         android:text="@string/fragment_dashboard_text_discard"
-        app:layout_constraintBottom_toTopOf="@id/fragment_dashboard_button_discard"
+        android:textSize="@dimen/fragment_dashboard_text_size"
+        app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_button_discard"
         app:layout_constraintEnd_toEndOf="@id/fragment_dashboard_button_discard"
-        app:layout_constraintStart_toStartOf="@id/fragment_dashboard_button_discard" />
+        app:layout_constraintStart_toStartOf="@id/fragment_dashboard_button_discard"
+        app:layout_constraintTop_toBottomOf="@id/fragment_dashboard_button_discard" />
 
     <ImageButton
         android:id="@+id/fragment_dashboard_button_recycle"
@@ -68,10 +70,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/main_margin"
+        android:paddingTop="@dimen/main_margin"
         android:text="@string/fragment_dashboard_text_recycle"
-        app:layout_constraintBottom_toTopOf="@id/fragment_dashboard_button_recycle"
+        android:textSize="@dimen/fragment_dashboard_text_size"
+        app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_button_recycle"
         app:layout_constraintEnd_toEndOf="@id/fragment_dashboard_button_recycle"
-        app:layout_constraintStart_toStartOf="@id/fragment_dashboard_button_recycle" />
+        app:layout_constraintStart_toStartOf="@id/fragment_dashboard_button_recycle"
+        app:layout_constraintTop_toBottomOf="@id/fragment_dashboard_button_recycle"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
+        android:textSize="@dimen/layout_list_notifications_item_text_size"
         android:text="@string/layout_list_notifications_item_preview_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/layout_list_notifications_item_image"
@@ -29,7 +30,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_punto_limpio_logo" />
-
     <ImageView
         android:id="@+id/layout_list_notifications_item_image_background"
         android:layout_width="wrap_content"

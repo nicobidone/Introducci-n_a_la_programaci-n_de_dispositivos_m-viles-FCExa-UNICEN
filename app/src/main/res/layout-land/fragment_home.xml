@@ -8,10 +8,11 @@
         android:id="@+id/fragment_home_text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/main_margin"
         android:fontFamily="@font/open_sans_regular"
         android:text="@string/fragment_home_text_title"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="@dimen/fragment_home_title_size_landscape"
+        android:textSize="@dimen/fragment_title_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

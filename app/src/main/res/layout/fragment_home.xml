@@ -12,7 +12,7 @@
         android:fontFamily="@font/open_sans_regular"
         android:text="@string/fragment_home_text_title"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="@dimen/fragment_title_size_portrait"
+        android:textSize="@dimen/fragment_title_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
