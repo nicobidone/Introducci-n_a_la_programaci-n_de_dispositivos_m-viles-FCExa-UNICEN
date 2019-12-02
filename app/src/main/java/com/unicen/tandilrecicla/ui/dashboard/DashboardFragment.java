@@ -55,8 +55,13 @@ public class DashboardFragment extends Fragment {
         imageButtonRecycle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                recycle();
-                Toast.makeText(getContext(), "Your recycling has been recorded!", Toast.LENGTH_LONG).show();
+                if (dashboardViewModel.isEmptyQuantity()) {
+                    recycle();
+                    Toast.makeText(getContext(), "Your recycling has been recorded!", Toast.LENGTH_LONG).show();
+                    dashboardViewModel.clearRecyclingQuantities();
+                } else {
+                    Toast.makeText(getContext(), "Your recycling is empty!", Toast.LENGTH_LONG).show();
+                }
             }
         });
         imageButtonDiscard.setOnClickListener(new View.OnClickListener() {

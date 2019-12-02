@@ -204,16 +204,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private void setSharedPreferences(String user) {
         SharedPreferences sharedPreferences = getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
-
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(KEY_USER, user);
         editor.putBoolean(KEY_LOGGED, true);
-
         editor.apply();
     }
 
     private void register() {
-
         loginViewModel.postUser(getRegisteredUser()).observe(this, new androidx.lifecycle.Observer<RegisteredUser>() {
             @Override
             public void onChanged(RegisteredUser responseBody) {
@@ -223,9 +220,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
-        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {

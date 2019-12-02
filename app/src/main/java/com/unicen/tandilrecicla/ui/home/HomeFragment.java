@@ -68,7 +68,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
             public void onClick(View v) {
                 if (getActivity() != null) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setMessage("Confirm Logout")
+                    builder.setTitle("Confirm Logout")
                             .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -82,7 +82,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
             }
         });
 
-//        total();
+        total();
         return root;
     }
 

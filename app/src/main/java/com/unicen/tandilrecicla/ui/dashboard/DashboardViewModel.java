@@ -39,6 +39,10 @@ class DashboardViewModel extends ViewModel {
         }
     }
 
+    Boolean isEmptyQuantity() {
+        return quantity.size() > 0;
+    }
+
     void clearRecyclingQuantities() {
         quantity.clear();
     }

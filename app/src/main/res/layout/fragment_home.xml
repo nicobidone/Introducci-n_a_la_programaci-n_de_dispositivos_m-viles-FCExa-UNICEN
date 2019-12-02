@@ -37,8 +37,8 @@
 
     <ImageButton
         android:id="@+id/fragment_home_logout_button"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="@dimen/fragment_home_logout_button_size"
+        android:layout_height="@dimen/fragment_home_logout_button_size"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_logout"
         app:layout_constraintEnd_toEndOf="parent"
