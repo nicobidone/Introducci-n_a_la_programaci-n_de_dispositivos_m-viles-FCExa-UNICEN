@@ -1,5 +1,7 @@
 package com.unicen.tandilrecicla.ui.home;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -19,6 +22,7 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.unicen.tandilrecicla.MainActivitySharedViewModel;
 import com.unicen.tandilrecicla.R;
+import com.unicen.tandilrecicla.ui.login.LoginActivity;
 
 import java.io.IOException;
 
@@ -48,6 +52,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         }
         PieChart chart = root.findViewById(R.id.fragment_home_pie_chart);
         ImageButton centerIcon = root.findViewById(R.id.fragment_home_center_button);
+        ImageButton logoutIcon = root.findViewById(R.id.fragment_home_logout_button);
 
         chart.setOnChartValueSelectedListener(this);
         homeViewModel.setPieChart(chart);
@@ -58,7 +63,24 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
                 homeViewModel.changeDisplayUserValues();
             }
         });
-
+        logoutIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getActivity() != null) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage("Confirm Logout")
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    maSharedViewModel.setLogged(false);
+                                    startActivity(new Intent(LoginActivity.getIntent(getActivity())));
+                                }
+                            })
+                            .setNegativeButton("Cancel", null)
+                            .show();
+                }
+            }
+        });
 
 //        total();
         return root;
@@ -81,16 +103,16 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
     private void total() {
         homeViewModel.getTotalRecycling(maSharedViewModel.getSelected().getValue()).observe(this,
                 new androidx.lifecycle.Observer<ResponseBody>() {
-            @Override
-            public void onChanged(ResponseBody responseBody) {
-                Log.d(TAG, "onChanged: this is a live data response!");
-                try {
-                    Log.d(TAG, "onChanged: " + responseBody.string());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+                    @Override
+                    public void onChanged(ResponseBody responseBody) {
+                        Log.d(TAG, "onChanged: this is a live data response!");
+                        try {
+                            Log.d(TAG, "onChanged: " + responseBody.string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
 
-        });
+                });
     }
 }

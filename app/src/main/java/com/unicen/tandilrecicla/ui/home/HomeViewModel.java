@@ -86,7 +86,8 @@ public class HomeViewModel extends ViewModel {
         l.setDrawInside(false);
         l.setXEntrySpace(7f);
         l.setYEntrySpace(0f);
-        l.setYOffset(0f);
+        l.setYOffset(15f);
+        l.setWordWrapEnabled(true);
 
         chart.setEntryLabelColor(Color.BLACK);
         chart.setEntryLabelTypeface(tfRegular);

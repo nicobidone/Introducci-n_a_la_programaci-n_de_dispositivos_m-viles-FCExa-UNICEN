@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -22,7 +23,7 @@ import static com.unicen.tandilrecicla.data.Constants.KEY_USER;
 
 public class MainActivity extends AppCompatActivity {
 
-    private MainActivitySharedViewModel model;
+    private MainActivitySharedViewModel mASharedViewModel;
 
     public static Intent getIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -41,31 +42,30 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
         SharedPreferences sharedPreferences = getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
-        model = ViewModelProviders.of(this).get(MainActivitySharedViewModel.class);
+        mASharedViewModel = ViewModelProviders.of(this).get(MainActivitySharedViewModel.class);
         if (!sharedPreferences.getBoolean(KEY_LOGGED, false)) {
             startActivity(new Intent(LoginActivity.getIntent(this)));
         } else {
-            if (model.getFirstOnCreate()) {
+            if (mASharedViewModel.getFirstOnCreate()) {
                 String welcome = "Welcome " + sharedPreferences.getString(KEY_USER, EMPTY_STRING) + "!";
                 Toast.makeText(this, welcome, Toast.LENGTH_LONG).show();
-                model.setFirstOnCreate();
+                mASharedViewModel.setFirstOnCreate();
             }
-            model.setSelect(sharedPreferences.getString(KEY_USER, EMPTY_STRING));
-            model.setLogged(true);
+            mASharedViewModel.setSelect(sharedPreferences.getString(KEY_USER, EMPTY_STRING));
+            mASharedViewModel.setLogged(true);
         }
-    }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        SharedPreferences sharedPreferences = getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        String getSelected = model.getSelected().getValue();
-        editor.putString(KEY_USER, (getSelected != null ? getSelected : EMPTY_STRING));
-        Boolean getLogged = model.getLogged().getValue();
-        editor.putBoolean(KEY_LOGGED, (getLogged != null ? getLogged : false));
-
-        editor.apply();
+        mASharedViewModel.getLogged().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                SharedPreferences sharedPreferences = getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                String getSelected = mASharedViewModel.getSelected().getValue();
+                editor.putString(KEY_USER, (getSelected != null ? getSelected : EMPTY_STRING));
+                Boolean getLogged = mASharedViewModel.getLogged().getValue();
+                editor.putBoolean(KEY_LOGGED, (getLogged != null ? getLogged : false));
+                editor.apply();
+            }
+        });
     }
 }
