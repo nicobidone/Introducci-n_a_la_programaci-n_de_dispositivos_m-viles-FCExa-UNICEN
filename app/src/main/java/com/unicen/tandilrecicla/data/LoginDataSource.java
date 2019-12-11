@@ -5,7 +5,7 @@ import com.unicen.tandilrecicla.data.model.RegisteredUser;
 
 import java.io.IOException;
 
-import static com.unicen.tandilrecicla.data.model.Utils.getRegisteredUser;
+import static com.unicen.tandilrecicla.data.model.RegisteredUserBuilder.getRegisteredUser;
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.

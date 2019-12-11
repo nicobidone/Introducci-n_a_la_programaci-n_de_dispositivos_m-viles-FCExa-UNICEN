@@ -5,10 +5,16 @@ import androidx.lifecycle.LiveDataReactiveStreams;
 
 import com.unicen.tandilrecicla.data.model.LoggedInUser;
 import com.unicen.tandilrecicla.data.model.RegisteredUser;
+import com.unicen.tandilrecicla.data.model.RegisteredUserBuilder;
 import com.unicen.tandilrecicla.data.remote.ServiceGenerator;
 
+import java.net.SocketTimeoutException;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
+import okhttp3.internal.http.RealResponseBody;
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -45,7 +51,16 @@ public class LoginRepository {
                     .fromPublisher(ServiceGenerator.getRequestApi()
                             .registerPost(registeredUser)
                             .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread()));
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .onErrorReturn(new Function<Throwable, RegisteredUser>() {
+                                @Override
+                                public RegisteredUser apply(Throwable error) {
+                                    if (error instanceof SocketTimeoutException)
+                                        return RegisteredUserBuilder.getEmptyUser();
+                                    else throw new IllegalArgumentException();
+                                }
+                            })
+                    );
         } catch (Exception e) {
             return null;
         }

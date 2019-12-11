@@ -17,11 +17,11 @@ import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.MPPointF;
 import com.unicen.tandilrecicla.data.HomeRepository;
+import com.unicen.tandilrecicla.data.model.Recycling;
 import com.unicen.tandilrecicla.data.model.Utils;
 
 import java.util.ArrayList;
-
-import okhttp3.ResponseBody;
+import java.util.List;
 
 public class HomeViewModel extends ViewModel {
 
@@ -35,17 +35,28 @@ public class HomeViewModel extends ViewModel {
     private Typeface tfRegular;
     private Typeface tfLight;
 
+    private List<Integer> values;
+
     HomeViewModel(HomeRepository homeRepository) {
         mText = new MutableLiveData<>();
         mText.setValue("This is home fragment");
         this.homeRepository = homeRepository;
+        this.values = null;
+    }
+
+    void setChartValues(List<Integer> values) {
+        this.values = values;
+    }
+
+    boolean hasValues() {
+        return values != null;
     }
 
     public LiveData<String> getText() {
         return mText;
     }
 
-    LiveData<ResponseBody> getTotalRecycling(String id) {
+    LiveData<Recycling> getTotalRecycling(String id) {
         return homeRepository.makeReactiveQuery(id);
     }
 
@@ -75,7 +86,7 @@ public class HomeViewModel extends ViewModel {
         chart.setRotationEnabled(true);
         chart.setHighlightPerTapEnabled(true);
 
-        setData(parties.length, 10);
+        setData();
 
         chart.animateY(1400, Easing.EaseInOutQuad);
 
@@ -94,14 +105,13 @@ public class HomeViewModel extends ViewModel {
         chart.setEntryLabelTextSize(12f);
     }
 
-    private void setData(int count, float range) {
+    private void setData() {
         ArrayList<PieEntry> entries = new ArrayList<>();
 
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
         // the chart.
-        for (int i = 0; i < count; i++) {
-            entries.add(new PieEntry((float) ((Math.random() * range) + range / 5),
-                    parties[i % parties.length]));
+        for (int i = 0; i < values.size(); i++) {
+            entries.add(new PieEntry((float) values.get(i), parties[i % parties.length]));
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "Total recycling");

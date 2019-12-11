@@ -22,11 +22,11 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.unicen.tandilrecicla.MainActivitySharedViewModel;
 import com.unicen.tandilrecicla.R;
+import com.unicen.tandilrecicla.data.model.Recycling;
 import com.unicen.tandilrecicla.ui.login.LoginActivity;
 
-import java.io.IOException;
-
-import okhttp3.ResponseBody;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment implements OnChartValueSelectedListener {
 
@@ -50,17 +50,18 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         if (getActivity().getWindow() != null) {
             getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
-        PieChart chart = root.findViewById(R.id.fragment_home_pie_chart);
+        final PieChart chart = root.findViewById(R.id.fragment_home_pie_chart);
         ImageButton centerIcon = root.findViewById(R.id.fragment_home_center_button);
         ImageButton logoutIcon = root.findViewById(R.id.fragment_home_logout_button);
 
         chart.setOnChartValueSelectedListener(this);
         homeViewModel.setPieChart(chart);
-        homeViewModel.setChartConfiguration(chart);
         centerIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                homeViewModel.changeDisplayUserValues();
+                if (homeViewModel.hasValues()) {
+                    homeViewModel.changeDisplayUserValues();
+                }
             }
         });
         logoutIcon.setOnClickListener(new View.OnClickListener() {
@@ -81,8 +82,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
                 }
             }
         });
-
-        total();
+        total(chart);
         return root;
     }
 
@@ -100,17 +100,20 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         Log.i("PieChart", "nothing selected");
     }
 
-    private void total() {
+    private void total(final PieChart chart) {
         homeViewModel.getTotalRecycling(maSharedViewModel.getSelected().getValue()).observe(this,
-                new androidx.lifecycle.Observer<ResponseBody>() {
+                new androidx.lifecycle.Observer<Recycling>() {
                     @Override
-                    public void onChanged(ResponseBody responseBody) {
+                    public void onChanged(Recycling responseBody) {
                         Log.d(TAG, "onChanged: this is a live data response!");
-                        try {
-                            Log.d(TAG, "onChanged: " + responseBody.string());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        final List<Integer> values = new ArrayList<>();
+                        values.add(responseBody.getBottles());
+                        values.add(responseBody.getPaperboard());
+                        values.add(responseBody.getGlass());
+                        values.add(responseBody.getTetrabriks());
+                        values.add(responseBody.getCans());
+                        homeViewModel.setChartValues(values);
+                        homeViewModel.setChartConfiguration(chart);
                     }
 
                 });

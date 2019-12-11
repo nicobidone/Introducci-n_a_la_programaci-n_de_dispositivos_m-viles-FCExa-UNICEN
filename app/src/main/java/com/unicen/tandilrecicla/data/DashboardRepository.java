@@ -4,9 +4,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
 
 import com.unicen.tandilrecicla.data.model.Recycling;
+import com.unicen.tandilrecicla.data.model.RecyclingBuilder;
 import com.unicen.tandilrecicla.data.remote.ServiceGenerator;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 public class DashboardRepository {
@@ -30,7 +32,14 @@ public class DashboardRepository {
                 .fromPublisher(ServiceGenerator.getRequestApi()
                         .savePost(id, recycling)
                         .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread()));
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .onErrorReturn(new Function<Throwable, Recycling>() {
+                            @Override
+                            public Recycling apply(Throwable error) {
+                                return RecyclingBuilder.getRecyclingEmpty();
+                            }
+                        })
+                );
     }
 }
 

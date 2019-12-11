@@ -3,10 +3,14 @@ package com.unicen.tandilrecicla.data;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
 
+import com.unicen.tandilrecicla.data.model.Recycling;
+import com.unicen.tandilrecicla.data.model.RecyclingBuilder;
 import com.unicen.tandilrecicla.data.remote.ServiceGenerator;
 
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
+import okhttp3.internal.http.RealResponseBody;
 
 public class HomeRepository {
 
@@ -25,10 +29,17 @@ public class HomeRepository {
         return instance;
     }
 
-    public LiveData<ResponseBody> makeReactiveQuery(String id) {
+    public LiveData<Recycling> makeReactiveQuery(String id) {
         return LiveDataReactiveStreams
                 .fromPublisher(ServiceGenerator.getRequestApi()
                         .makeQuery(id)
-                        .subscribeOn(Schedulers.io()));
+                        .subscribeOn(Schedulers.io())
+                        .onErrorReturn(new Function<Throwable, Recycling>() {
+                            @Override
+                            public Recycling apply(Throwable error) {
+                                return RecyclingBuilder.getRecyclingEmpty();
+                            }
+                        })
+                );
     }
 }

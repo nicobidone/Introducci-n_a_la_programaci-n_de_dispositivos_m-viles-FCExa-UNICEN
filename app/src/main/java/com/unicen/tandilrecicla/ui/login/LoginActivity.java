@@ -27,16 +27,29 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.unicen.tandilrecicla.MainActivity;
 import com.unicen.tandilrecicla.R;
+import com.unicen.tandilrecicla.data.model.Address;
 import com.unicen.tandilrecicla.data.model.RegisteredUser;
 
 import static com.unicen.tandilrecicla.data.Constants.FILE_NAME;
 import static com.unicen.tandilrecicla.data.Constants.KEY_LOGGED;
 import static com.unicen.tandilrecicla.data.Constants.KEY_USER;
-import static com.unicen.tandilrecicla.data.model.Utils.getRegisteredUser;
 
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
+
+    EditText emailEditText;
+    EditText passwordEditText;
+    EditText firstNameEditText;
+    EditText lasNameEditText;
+    EditText emailOrUserNameEditText;
+    EditText userNameEditText;
+    EditText departmentEditText;
+    EditText numberEditText;
+    EditText streetAddressEditText;
+    EditText cityEditText;
+    EditText stateEditText;
+    EditText zipCodeEditText;
 
     private LoginViewModel loginViewModel;
 
@@ -52,18 +65,19 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory()).get(LoginViewModel.class);
 
-        final EditText emailEditText = findViewById(R.id.activity_login_text_email);
-        final EditText passwordEditText = findViewById(R.id.activity_login_text_password);
-        final EditText firstNameEditText = findViewById(R.id.activity_login_text_first_name);
-        final EditText lasNameEditText = findViewById(R.id.activity_login_text_last_name);
-        final EditText emailOrUserNameEditText = findViewById(R.id.activity_login_text_logger);
-        final EditText userNameEditText = findViewById(R.id.activity_login_text_user_name);
-        final EditText departmentEditText = findViewById(R.id.activity_login_text_department);
-        final EditText numberEditText = findViewById(R.id.activity_login_text_number);
-        final EditText streetAddressEditText = findViewById(R.id.activity_login_text_street_address);
-        final EditText cityEditText = findViewById(R.id.activity_login_text_city);
-        final EditText stateEditText = findViewById(R.id.activity_login_text_state);
-        final EditText zipCodeEditText = findViewById(R.id.activity_login_text_zip_code);
+        emailEditText = findViewById(R.id.activity_login_text_email);
+        passwordEditText = findViewById(R.id.activity_login_text_password);
+        firstNameEditText = findViewById(R.id.activity_login_text_first_name);
+        lasNameEditText = findViewById(R.id.activity_login_text_last_name);
+        emailOrUserNameEditText = findViewById(R.id.activity_login_text_logger);
+        userNameEditText = findViewById(R.id.activity_login_text_user_name);
+        departmentEditText = findViewById(R.id.activity_login_text_department);
+        numberEditText = findViewById(R.id.activity_login_text_number);
+        streetAddressEditText = findViewById(R.id.activity_login_text_street_address);
+        cityEditText = findViewById(R.id.activity_login_text_city);
+        stateEditText = findViewById(R.id.activity_login_text_state);
+        zipCodeEditText = findViewById(R.id.activity_login_text_zip_code);
+
         final Button loginButton = findViewById(R.id.activity_login_button_login);
         final Button registerButton = findViewById(R.id.activity_login_button_register);
         final Button cancelButton = findViewById(R.id.activity_login_button_cancel);
@@ -71,8 +85,6 @@ public class LoginActivity extends AppCompatActivity {
         final ProgressBar loadingProgressBar = findViewById(R.id.activity_login_button_loading);
         final EditText[] registerFields = new EditText[]{firstNameEditText, lasNameEditText, userNameEditText, departmentEditText,
                 emailEditText, numberEditText, streetAddressEditText, cityEditText, stateEditText, zipCodeEditText};
-
-        final Context context = this;
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -105,10 +117,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 setResult(Activity.RESULT_OK);
 
-                setSharedPreferences(emailOrUserNameEditText.getText().toString());
-
-                startActivity(new Intent(MainActivity.getIntent(context)));
-                finish();
+                startMainActivity();
             }
         });
 
@@ -139,7 +148,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    register();
+                    registerButton.performClick();
                 }
                 return false;
             }
@@ -168,7 +177,8 @@ public class LoginActivity extends AppCompatActivity {
                     emailOrUserNameEditText.setVisibility(View.GONE);
                     loginViewModel.toRegister(emailOrUserNameEditText, emailEditText, userNameEditText);
                 } else {
-                    register();
+                    register(getRegisteredUser());
+                    startMainActivity();
                 }
             }
         });
@@ -202,6 +212,33 @@ public class LoginActivity extends AppCompatActivity {
         );
     }
 
+    private void startMainActivity() {
+        String username = emailOrUserNameEditText.getText().toString().isEmpty() ?
+                userNameEditText.getText().toString() :
+                emailOrUserNameEditText.getText().toString();
+        setSharedPreferences(username);
+        startActivity(new Intent(MainActivity.getIntent(this)));
+        finish();
+    }
+
+    private RegisteredUser getRegisteredUser() {
+        final Address address = new Address();
+        address.setDepartment(departmentEditText.getText().toString());
+        address.setCity(cityEditText.getText().toString());
+        address.setNumber(Integer.parseInt(numberEditText.getText().toString()));
+        address.setStreetAddress(streetAddressEditText.getText().toString());
+        address.setCity(cityEditText.getText().toString());
+        address.setState(stateEditText.getText().toString());
+        address.setZipCode(zipCodeEditText.getText().toString());
+        final RegisteredUser registeredUser = new RegisteredUser();
+        registeredUser.setFirstName(firstNameEditText.getText().toString());
+        registeredUser.setLastName(lasNameEditText.getText().toString());
+        registeredUser.setMail(emailEditText.getText().toString());
+        registeredUser.setUsername(userNameEditText.getText().toString());
+        registeredUser.setAddress(address);
+        return registeredUser;
+    }
+
     private void setSharedPreferences(String user) {
         SharedPreferences sharedPreferences = getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -210,8 +247,8 @@ public class LoginActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private void register() {
-        loginViewModel.postUser(getRegisteredUser()).observe(this, new androidx.lifecycle.Observer<RegisteredUser>() {
+    private void register(RegisteredUser registeredUser) {
+        loginViewModel.postUser(registeredUser).observe(this, new androidx.lifecycle.Observer<RegisteredUser>() {
             @Override
             public void onChanged(RegisteredUser responseBody) {
                 Log.d(TAG, "POST User: this is a live data response!");
