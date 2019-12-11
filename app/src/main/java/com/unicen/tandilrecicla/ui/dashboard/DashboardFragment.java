@@ -59,6 +59,7 @@ public class DashboardFragment extends Fragment {
                     recycle();
                     Toast.makeText(getContext(), "Your recycling has been recorded!", Toast.LENGTH_LONG).show();
                     dashboardViewModel.clearRecyclingQuantities();
+                    initRecyclerView();
                 } else {
                     Toast.makeText(getContext(), "Your recycling is empty!", Toast.LENGTH_LONG).show();
                 }

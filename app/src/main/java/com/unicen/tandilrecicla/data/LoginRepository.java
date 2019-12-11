@@ -8,13 +8,9 @@ import com.unicen.tandilrecicla.data.model.RegisteredUser;
 import com.unicen.tandilrecicla.data.model.RegisteredUserBuilder;
 import com.unicen.tandilrecicla.data.remote.ServiceGenerator;
 
-import java.net.SocketTimeoutException;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.ResponseBody;
-import okhttp3.internal.http.RealResponseBody;
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -55,9 +51,7 @@ public class LoginRepository {
                             .onErrorReturn(new Function<Throwable, RegisteredUser>() {
                                 @Override
                                 public RegisteredUser apply(Throwable error) {
-                                    if (error instanceof SocketTimeoutException)
-                                        return RegisteredUserBuilder.getEmptyUser();
-                                    else throw new IllegalArgumentException();
+                                    return RegisteredUserBuilder.getEmptyUser();
                                 }
                             })
                     );
