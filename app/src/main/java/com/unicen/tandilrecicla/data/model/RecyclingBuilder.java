@@ -1,5 +1,9 @@
 package com.unicen.tandilrecicla.data.model;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class RecyclingBuilder {
 
     public static Recycling getRecyclingEmpty() {
@@ -14,14 +18,16 @@ public class RecyclingBuilder {
         return recycling;
     }
 
-    static public Recycling getRecycling() {
+    static public Recycling getRecycling(int bottles, int tetrabriks, int glass, int paperboard, int cans) {
         Recycling recycling = new Recycling();
-        recycling.setBottles(1);
-        recycling.setTetrabriks(5);
-        recycling.setGlass(3);
-        recycling.setPaperboard(4);
-        recycling.setCans(2);
-        recycling.setDate("2018-11-29");
+        recycling.setBottles(bottles);
+        recycling.setTetrabriks(tetrabriks);
+        recycling.setGlass(glass);
+        recycling.setPaperboard(paperboard);
+        recycling.setCans(cans);
+        Date todayDate = Calendar.getInstance().getTime();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        recycling.setDate(formatter.format(todayDate));
         return recycling;
     }
 

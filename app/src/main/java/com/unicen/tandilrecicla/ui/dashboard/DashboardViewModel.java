@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.unicen.tandilrecicla.data.DashboardRepository;
 import com.unicen.tandilrecicla.data.model.Recycling;
+import com.unicen.tandilrecicla.data.model.RecyclingBuilder;
 
 class DashboardViewModel extends ViewModel {
 
@@ -47,7 +48,14 @@ class DashboardViewModel extends ViewModel {
         quantity.clear();
     }
 
-    LiveData<Recycling> postRecycling(String id, Recycling recycling) {
-        return dashboardRepository.postReactiveQuery(id, recycling);
+    LiveData<Recycling> postRecycling(String id) {
+        return dashboardRepository.postReactiveQuery(
+                id,
+                RecyclingBuilder.getRecycling(
+                        quantity.get(0),
+                        quantity.get(1),
+                        quantity.get(2),
+                        quantity.get(3),
+                        quantity.get(4)));
     }
 }
