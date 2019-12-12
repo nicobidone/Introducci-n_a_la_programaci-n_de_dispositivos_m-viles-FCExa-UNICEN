@@ -108,10 +108,18 @@ public class HomeViewModel extends ViewModel {
     private void setData() {
         ArrayList<PieEntry> entries = new ArrayList<>();
 
+        boolean showValues = false;
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
         // the chart.
         for (int i = 0; i < values.size(); i++) {
-            entries.add(new PieEntry((float) values.get(i), parties[i % parties.length]));
+            if (values.get(i) > 0) {
+                entries.add(new PieEntry((float) values.get(i), parties[i % parties.length]));
+                showValues = true;
+            }
+        }
+
+        if (entries.size() == 0) {
+            entries.add(new PieEntry(1, "No recycling"));
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "Total recycling");
@@ -136,6 +144,7 @@ public class HomeViewModel extends ViewModel {
         data.setValueTextSize(11f);
         data.setValueTextColor(Color.BLACK);
         data.setValueTypeface(tfLight);
+        data.setDrawValues(showValues);
         chart.setData(data);
 
         // undo all highlights

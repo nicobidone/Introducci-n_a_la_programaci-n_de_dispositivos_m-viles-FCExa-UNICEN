@@ -19,8 +19,6 @@ import com.unicen.tandilrecicla.R;
 import com.unicen.tandilrecicla.data.model.Recycling;
 import com.unicen.tandilrecicla.data.model.Utils;
 
-import static com.unicen.tandilrecicla.data.model.RecyclingBuilder.getRecycling;
-
 public class DashboardFragment extends Fragment {
 
     private static final String TAG = "DashboardFragment";
