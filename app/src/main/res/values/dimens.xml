@@ -23,4 +23,5 @@
 
     <dimen name="fragment_dashboard_text_size">20sp</dimen>
     <dimen name="fragment_home_logout_button_size">70dp</dimen>
+    <dimen name="activity_login_title_size">36sp</dimen>
 </resources>

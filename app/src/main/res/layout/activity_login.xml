@@ -17,12 +17,43 @@
         app:srcCompat="@drawable/login_background"
         tools:layout_editor_absoluteX="97dp" />
 
+    <TextView
+        android:id="@+id/activity_login_title_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans_extra_bold"
+        android:text="@string/activity_login_title_top"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/activity_login_title_size"
+        app:layout_constraintBottom_toTopOf="@+id/activity_login_title_bottom"
+        app:layout_constraintEnd_toStartOf="@+id/activity_login_image_title" />
+
+    <ImageView
+        android:id="@+id/activity_login_image_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="@+id/activity_login_title_bottom"
+        app:layout_constraintStart_toEndOf="@+id/activity_login_title_bottom"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_main_foreground" />
+
+    <TextView
+        android:id="@+id/activity_login_title_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans_extra_bold"
+        android:text="@string/activity_login_title_bottom"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/activity_login_title_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_login_image_title" />
+
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/activity_login_scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/main_margin_extended"
-        android:layout_marginBottom="@dimen/main_margin_extended"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -189,5 +220,7 @@
 
         </LinearLayout>
     </ScrollView>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

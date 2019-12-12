@@ -84,4 +84,6 @@
     <string name="fragment_notifications_text_schedule">Schedule \n Mondays to Saturday: 7 to 15hs \n Holidays: 9 to 13hs</string>
     <string name="layout_list_notifications_item_preview_text">TextView</string>
     <string name="fragment_home_text_logout">Logout</string>
+    <string name="activity_login_title_top">Tandil</string>
+    <string name="activity_login_title_bottom">Recicla</string>
 </resources>
