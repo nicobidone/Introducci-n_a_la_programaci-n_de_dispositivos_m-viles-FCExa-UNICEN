@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -85,6 +87,8 @@ public class DashboardFragment extends Fragment {
     private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView: Init recyclerView");
         DashboardRecyclerViewAdapter adapter = new DashboardRecyclerViewAdapter(mNames, mIcons, mGreyIcons, mColors, dashboardViewModel);
+        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getContext(), R.anim.layout_animation_fall_down);
+        recyclerView.setLayoutAnimation(animation);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }

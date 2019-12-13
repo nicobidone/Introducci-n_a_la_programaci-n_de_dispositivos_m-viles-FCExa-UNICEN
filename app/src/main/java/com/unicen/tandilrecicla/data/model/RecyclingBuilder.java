@@ -18,11 +18,11 @@ public class RecyclingBuilder {
         return recycling;
     }
 
-    static public Recycling getRecycling(int bottles, int glass, int paperboard, int tetrabriks, int cans) {
+    static public Recycling getRecycling(int bottles, int paperboard, int glass, int tetrabriks, int cans) {
         Recycling recycling = new Recycling();
         recycling.setBottles(bottles);
-        recycling.setPaperboard(paperboard);
         recycling.setGlass(glass);
+        recycling.setPaperboard(paperboard);
         recycling.setTetrabriks(tetrabriks);
         recycling.setCans(cans);
         Date todayDate = Calendar.getInstance().getTime();
