@@ -31,6 +31,5 @@ https://www.flaticon.com/packs/recycle
 https://github.com/PhilJay/MPAndroidChart
 
 
-![My gif](gifs/ezgif.com-resize3.gif)
-![My gif](gifs/ezgif.com-video-to-gif2.gif)
-
+![](gifs/ezgif.com-resize3.gif)
+![](gifs/ezgif.com-video-to-gif2.gif)
