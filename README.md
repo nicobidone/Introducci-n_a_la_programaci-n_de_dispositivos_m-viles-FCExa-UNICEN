@@ -1,6 +1,6 @@
 # Trabajo Final:  Introducción a la programación de dispositivos moviles - EXA UNICEN
 
-## Para la realización de este trabajo práctico se tuvieron las siguientes páginas como referencia
+## Para la realización de este trabajo se tuvieron como referencia las siguientes páginas 
 - https://square.github.io/retrofit/
 - https://github.com/ReactiveX/RxAndroid
 - https://github.com/ReactiveX/RxJava/wiki/Error-Handling-Operators
