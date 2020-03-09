@@ -1,5 +1,9 @@
 # Trabajo Final:  Introducción a la programación de dispositivos moviles - EXA UNICEN
 
+## Informe
+
+https://docs.google.com/document/d/1PCTIJF2hW52DJtY2MT5CmcKdi6FB9-aBSuOucm5md-0/edit?usp=sharing
+
 ## Para la realización de este trabajo se tuvieron como referencia las siguientes páginas 
 - https://square.github.io/retrofit/
 - https://github.com/ReactiveX/RxAndroid
