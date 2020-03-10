@@ -16,7 +16,8 @@ import com.unicen.tandilrecicla.data.model.RegisteredUser;
 
 public class LoginViewModel extends ViewModel {
 
-    private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
+    private MutableLiveData<FormState> loginFormState = new MutableLiveData<>();
+    private MutableLiveData<FormState> registerFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
     private LoginRepository loginRepository;
 
@@ -24,8 +25,12 @@ public class LoginViewModel extends ViewModel {
         this.loginRepository = loginRepository;
     }
 
-    LiveData<LoginFormState> getLoginFormState() {
+    LiveData<FormState> getLoginFormState() {
         return loginFormState;
+    }
+
+    LiveData<FormState> getRegisterFormState() {
+        return registerFormState;
     }
 
     LiveData<LoginResult> getLoginResult() {
@@ -46,11 +51,21 @@ public class LoginViewModel extends ViewModel {
 
     void loginDataChanged(String username, String password) {
         if (!isUserNameValid(username)) {
-            loginFormState.setValue(new LoginFormState(R.string.invalid_username, null));
+            loginFormState.setValue(new FormState(R.string.invalid_username, null));
         } else if (!isPasswordValid(password)) {
-            loginFormState.setValue(new LoginFormState(null, R.string.invalid_password));
+            loginFormState.setValue(new FormState(null, R.string.invalid_password));
         } else {
-            loginFormState.setValue(new LoginFormState(true));
+            loginFormState.setValue(new FormState(true));
+        }
+    }
+
+    void registerDataChanged(String email, String username, String password) {
+        if (!isUserNameValid(email) || !isUserNameValid(username)) {
+            registerFormState.setValue(new FormState(false));
+        } else if (!isPasswordValid(password)) {
+            registerFormState.setValue(new FormState(false));
+        } else {
+            registerFormState.setValue(new FormState(true));
         }
     }
 

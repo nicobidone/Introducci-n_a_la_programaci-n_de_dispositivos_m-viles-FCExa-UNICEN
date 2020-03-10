@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -86,18 +87,32 @@ public class LoginActivity extends AppCompatActivity {
         final EditText[] registerFields = new EditText[]{firstNameEditText, lasNameEditText, userNameEditText, departmentEditText,
                 emailEditText, numberEditText, streetAddressEditText, cityEditText, stateEditText, zipCodeEditText};
 
-        loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
+        loginViewModel.getLoginFormState().observe(this, new Observer<FormState>() {
             @Override
-            public void onChanged(@Nullable LoginFormState loginFormState) {
-                if (loginFormState == null) {
+            public void onChanged(@Nullable FormState formState) {
+                if (formState == null) {
                     return;
                 }
-                loginButton.setEnabled(loginFormState.isDataValid());
-                if (loginFormState.getUsernameError() != null) {
-                    emailOrUserNameEditText.setError(getString(loginFormState.getUsernameError()));
+                loginButton.setEnabled(formState.isDataValid());
+                if (formState.getUsernameError() != null) {
+                    emailOrUserNameEditText.setError(getString(formState.getUsernameError()));
                 }
-                if (loginFormState.getPasswordError() != null) {
-                    passwordEditText.setError(getString(loginFormState.getPasswordError()));
+                if (formState.getPasswordError() != null) {
+                    passwordEditText.setError(getString(formState.getPasswordError()));
+                }
+            }
+        });
+
+        loginViewModel.getRegisterFormState().observe(this, new Observer<FormState>() {
+            @Override
+            public void onChanged(@Nullable FormState formState) {
+                if (formState == null) {
+                    return;
+                }
+                if (formState.isDataValid()) {
+                    registerButton.setEnabled(true);
+                } else {
+                    registerButton.setEnabled(false);
                 }
             }
         });
@@ -134,7 +149,9 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(emailOrUserNameEditText.getText().toString(),
+                loginViewModel.loginDataChanged(emailOrUserNameEditText.getText().toString(), passwordEditText.getText().toString());
+                loginViewModel.registerDataChanged(emailEditText.getText().toString(),
+                        userNameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
         };
@@ -142,6 +159,10 @@ public class LoginActivity extends AppCompatActivity {
         emailOrUserNameEditText.addTextChangedListener(afterTextChangedListener);
 
         passwordEditText.addTextChangedListener(afterTextChangedListener);
+
+        emailEditText.addTextChangedListener(afterTextChangedListener);
+
+        userNameEditText.addTextChangedListener(afterTextChangedListener);
 
         zipCodeEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
@@ -158,7 +179,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(emailOrUserNameEditText.getText().toString(), passwordEditText.getText().toString());
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        loginViewModel.login(emailOrUserNameEditText.getText().toString(), passwordEditText.getText().toString());
+                    }
+                }, 3000);
             }
         });
 
@@ -173,6 +199,8 @@ public class LoginActivity extends AppCompatActivity {
                     cancelButton.setVisibility(View.VISIBLE);
                     loginButton.setVisibility(View.GONE);
                     firstNameEditText.requestFocus();
+
+                    registerButton.setEnabled(false);
 
                     emailOrUserNameEditText.setVisibility(View.GONE);
                     loginViewModel.toRegister(emailOrUserNameEditText, emailEditText, userNameEditText);
@@ -194,6 +222,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 loginViewModel.toLogin(emailOrUserNameEditText, emailEditText);
                 emailOrUserNameEditText.setVisibility(View.VISIBLE);
+
+                registerButton.setEnabled(true);
             }
         });
 
@@ -225,7 +255,7 @@ public class LoginActivity extends AppCompatActivity {
         final Address address = new Address();
         address.setDepartment(departmentEditText.getText().toString());
         address.setCity(cityEditText.getText().toString());
-        address.setNumber(Integer.parseInt(numberEditText.getText().toString()));
+        address.setNumber(Integer.parseInt(numberEditText.getText().toString().equals("") ? "0" : numberEditText.getText().toString()));
         address.setStreetAddress(streetAddressEditText.getText().toString());
         address.setCity(cityEditText.getText().toString());
         address.setState(stateEditText.getText().toString());
@@ -264,4 +294,3 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
 }
-
