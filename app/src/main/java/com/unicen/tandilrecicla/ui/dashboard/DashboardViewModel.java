@@ -48,8 +48,8 @@ class DashboardViewModel extends ViewModel {
         quantity.clear();
     }
 
-    LiveData<Recycling> postRecycling(String id) {
-        return dashboardRepository.postReactiveQuery(
+    LiveData<Recycling> postNewRecyclingData(String id) {
+        return dashboardRepository.postNewRecyclingQuery(
                 id,
                 RecyclingBuilder.getRecycling(
                         quantity.get(0),

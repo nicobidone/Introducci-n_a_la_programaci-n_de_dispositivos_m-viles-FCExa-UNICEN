@@ -94,7 +94,7 @@ public class DashboardFragment extends Fragment {
     }
 
     private void recycle() {
-        dashboardViewModel.postRecycling(maSharedViewModel.getSelected().getValue()).observe(this,
+        dashboardViewModel.postNewRecyclingData(maSharedViewModel.getSelected().getValue()).observe(this,
                 new androidx.lifecycle.Observer<Recycling>() {
                     @Override
                     public void onChanged(Recycling responseBody) {

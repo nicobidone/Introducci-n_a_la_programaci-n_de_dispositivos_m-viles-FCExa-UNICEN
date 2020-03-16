@@ -101,7 +101,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
     }
 
     private void total(final PieChart chart) {
-        homeViewModel.getTotalRecycling(maSharedViewModel.getSelected().getValue()).observe(this,
+        homeViewModel.getTotalRecyclingData(maSharedViewModel.getSelected().getValue()).observe(this,
                 new androidx.lifecycle.Observer<Recycling>() {
                     @Override
                     public void onChanged(Recycling responseBody) {

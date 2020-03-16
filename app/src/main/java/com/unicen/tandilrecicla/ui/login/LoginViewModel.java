@@ -10,15 +10,12 @@ import androidx.lifecycle.ViewModel;
 
 import com.unicen.tandilrecicla.R;
 import com.unicen.tandilrecicla.data.LoginRepository;
-import com.unicen.tandilrecicla.data.Result;
-import com.unicen.tandilrecicla.data.model.LoggedInUser;
 import com.unicen.tandilrecicla.data.model.RegisteredUser;
 
-public class LoginViewModel extends ViewModel {
+class LoginViewModel extends ViewModel {
 
     private MutableLiveData<FormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<FormState> registerFormState = new MutableLiveData<>();
-    private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
     private LoginRepository loginRepository;
 
     LoginViewModel(LoginRepository loginRepository) {
@@ -31,22 +28,6 @@ public class LoginViewModel extends ViewModel {
 
     LiveData<FormState> getRegisterFormState() {
         return registerFormState;
-    }
-
-    LiveData<LoginResult> getLoginResult() {
-        return loginResult;
-    }
-
-    public void login(String username, String password) {
-        // can be launched in a separate asynchronous job
-        Result<LoggedInUser> result = loginRepository.login(username, password);
-
-        if (result instanceof Result.Success) {
-            LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
-        } else {
-            loginResult.setValue(new LoginResult(R.string.login_failed));
-        }
     }
 
     void loginDataChanged(String username, String password) {
@@ -86,8 +67,8 @@ public class LoginViewModel extends ViewModel {
         return password != null && password.trim().length() > 5;
     }
 
-    LiveData<RegisteredUser> postUser(RegisteredUser registeredUser) {
-        return loginRepository.postUserQuery(registeredUser);
+    LiveData<RegisteredUser> postNewUserData(RegisteredUser registeredUser) {
+        return loginRepository.postNewUserQuery(registeredUser);
     }
 
     void toRegister(@NonNull EditText emailOrUserName, @NonNull EditText email, @NonNull EditText userName) {

@@ -27,10 +27,10 @@ public class DashboardRepository {
         return instance;
     }
 
-    public LiveData<Recycling> postReactiveQuery(String id, Recycling recycling) {
+    public LiveData<Recycling> postNewRecyclingQuery(String id, Recycling recycling) {
         return LiveDataReactiveStreams
                 .fromPublisher(ServiceGenerator.getRequestApi()
-                        .savePost(id, recycling)
+                        .postNewRecycling(id, recycling)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .onErrorReturn(new Function<Throwable, Recycling>() {

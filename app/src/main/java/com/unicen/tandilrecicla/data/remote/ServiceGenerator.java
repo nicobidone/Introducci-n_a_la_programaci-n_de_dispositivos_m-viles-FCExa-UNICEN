@@ -20,7 +20,7 @@ public class ServiceGenerator {
 
     private static final String TAG = "ServiceGenerator";
 
-    public static final String BASE_URL = "http://192.168.0.10:8080/api/";
+    private static final String BASE_URL = "http://192.168.0.10:8080/api/";
 
     public interface OnConnectionTimeoutListener {
         void onConnectionTimeout();

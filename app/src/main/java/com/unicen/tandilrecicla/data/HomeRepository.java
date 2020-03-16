@@ -27,9 +27,9 @@ public class HomeRepository {
         return instance;
     }
 
-    public LiveData<Recycling> makeReactiveQuery(String id) {
+    public LiveData<Recycling> getTotalRecyclingQuery(String id) {
         return LiveDataReactiveStreams.fromPublisher(ServiceGenerator.getRequestApi()
-                .makeQuery(id)
+                .getTotalRecycling(id)
                 .subscribeOn(Schedulers.io())
                 .onErrorReturn(new Function<Throwable, Recycling>() {
                     @Override

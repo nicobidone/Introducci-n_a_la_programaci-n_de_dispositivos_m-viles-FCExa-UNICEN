@@ -1,6 +1,5 @@
 package com.unicen.tandilrecicla.ui.login;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,10 +17,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -117,25 +114,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
-            @Override
-            public void onChanged(@Nullable LoginResult loginResult) {
-                if (loginResult == null) {
-                    return;
-                }
-                loadingProgressBar.setVisibility(View.GONE);
-                if (loginResult.getError() != null) {
-                    showLoginFailed(loginResult.getError());
-                }
-                if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess());
-                }
-                setResult(Activity.RESULT_OK);
-
-                startMainActivity();
-            }
-        });
-
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -182,7 +160,7 @@ public class LoginActivity extends AppCompatActivity {
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
-                        loginViewModel.login(emailOrUserNameEditText.getText().toString(), passwordEditText.getText().toString());
+                        startMainActivity();
                     }
                 }, 3000);
             }
@@ -248,7 +226,6 @@ public class LoginActivity extends AppCompatActivity {
                 emailOrUserNameEditText.getText().toString();
         setSharedPreferences(username);
         startActivity(new Intent(MainActivity.getIntent(this)));
-        finish();
     }
 
     private RegisteredUser getRegisteredUser() {
@@ -278,19 +255,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void register(RegisteredUser registeredUser) {
-        loginViewModel.postUser(registeredUser).observe(this, new androidx.lifecycle.Observer<RegisteredUser>() {
+        loginViewModel.postNewUserData(registeredUser).observe(this, new androidx.lifecycle.Observer<RegisteredUser>() {
             @Override
             public void onChanged(RegisteredUser responseBody) {
                 Log.d(TAG, "POST User: this is a live data response!");
             }
         });
-    }
-
-    private void updateUiWithUser(LoggedInUserView model) {
-        // TODO : initiate successful logged in experience
-    }
-
-    private void showLoginFailed(@StringRes Integer errorString) {
-        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
 }

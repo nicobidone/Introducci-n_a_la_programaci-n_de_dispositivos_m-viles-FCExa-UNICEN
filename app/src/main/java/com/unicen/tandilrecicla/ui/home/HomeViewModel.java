@@ -56,8 +56,8 @@ public class HomeViewModel extends ViewModel {
         return mText;
     }
 
-    LiveData<Recycling> getTotalRecycling(String id) {
-        return homeRepository.makeReactiveQuery(id);
+    LiveData<Recycling> getTotalRecyclingData(String id) {
+        return homeRepository.getTotalRecyclingQuery(id);
     }
 
     void setChartConfiguration(PieChart chart) {
