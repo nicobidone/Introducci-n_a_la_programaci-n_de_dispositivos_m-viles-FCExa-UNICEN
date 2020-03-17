@@ -33,7 +33,7 @@ public class RegisteredUserBuilder {
         registeredUser.setFirstName("Mauri");
         registeredUser.setLastName("Arroqui");
         registeredUser.setMail("mauriarroqui@gmail.com");
-        registeredUser.setUsername("nicob");
+        registeredUser.setUsername("marroqui");
         registeredUser.setAddress(address);
         return registeredUser;
     }
