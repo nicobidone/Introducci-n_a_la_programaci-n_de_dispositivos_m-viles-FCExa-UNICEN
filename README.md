@@ -33,6 +33,10 @@ from
 https://www.flaticon.com/free-icon/logout_660350?term=logout&page=1&position=1
 https://www.flaticon.com/packs/recycle
 
+https://www.flaticon.es/autores/google"
+from 
+https://www.flaticon.es/icono-gratis/lista_565700?term=lista&page=1&position=20
+
 ## Charts
 https://github.com/PhilJay/MPAndroidChart
 
