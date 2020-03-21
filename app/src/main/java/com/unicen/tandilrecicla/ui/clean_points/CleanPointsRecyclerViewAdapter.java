@@ -1,4 +1,4 @@
-package com.unicen.tandilrecicla.ui.notifications;
+package com.unicen.tandilrecicla.ui.clean_points;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,20 +15,20 @@ import com.unicen.tandilrecicla.R;
 
 import static com.unicen.tandilrecicla.data.model.Utils.getVordiplomColors;
 
-public class NotificationsRecyclerViewAdapter extends RecyclerView.Adapter<NotificationsRecyclerViewAdapter.ViewHolder> {
+public class CleanPointsRecyclerViewAdapter extends RecyclerView.Adapter<CleanPointsRecyclerViewAdapter.ViewHolder> {
 
     private static final String TAG = "NotificationsRecyclerVA";
 
     private String[] mPoints;
 
-    NotificationsRecyclerViewAdapter(String[] mPoints) {
+    CleanPointsRecyclerViewAdapter(String[] mPoints) {
         this.mPoints = mPoints;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_list_notifications_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_list_clean_points_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -45,7 +45,7 @@ public class NotificationsRecyclerViewAdapter extends RecyclerView.Adapter<Notif
         return mPoints.length;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageDescription;
         ImageView imageBackground;
@@ -54,10 +54,10 @@ public class NotificationsRecyclerViewAdapter extends RecyclerView.Adapter<Notif
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textDescription = itemView.findViewById(R.id.layout_list_notifications_item_text);
-            imageDescription = itemView.findViewById(R.id.layout_list_notifications_item_image);
-            imageBackground = itemView.findViewById(R.id.layout_list_notifications_item_image_background);
-            constraintLayout = itemView.findViewById(R.id.layout_list_notifications_item_parent);
+            textDescription = itemView.findViewById(R.id.layout_list_clean_points_item_text);
+            imageDescription = itemView.findViewById(R.id.layout_list_clean_points_item_image);
+            imageBackground = itemView.findViewById(R.id.layout_list_clean_points_item_image_background);
+            constraintLayout = itemView.findViewById(R.id.layout_list_clean_points_item_parent);
         }
     }
 }

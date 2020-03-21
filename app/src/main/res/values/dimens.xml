@@ -19,7 +19,7 @@
     <dimen name="fragment_home_title_size_landscape">25sp</dimen>
     <dimen name="fragment_home_button_size_landscape">125dp</dimen>
 
-    <dimen name="layout_list_notifications_item_text_size">20sp</dimen>
+    <dimen name="layout_list_clean_points_item_text_size">20sp</dimen>
 
     <dimen name="fragment_dashboard_text_size">20sp</dimen>
     <dimen name="fragment_home_logout_button_size">70dp</dimen>

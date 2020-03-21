@@ -80,10 +80,13 @@
 
     <string name="fragment_home_text_title">My recycling</string>
     <string name="fragment_dashboard_text_title">New recycling</string>
-    <string name="fragment_notifications_text_title">Recycling points</string>
-    <string name="fragment_notifications_text_schedule">Schedule \n Mondays to Saturday: 7 to 15hs \n Holidays: 9 to 13hs</string>
-    <string name="layout_list_notifications_item_preview_text">TextView</string>
+    <string name="fragment_clean_points_text_title">Recycling points</string>
+    <string name="fragment_clean_points_text_schedule">Schedule \n Mondays to Saturday: 7 to 15hs \n Holidays: 9 to 13hs</string>
+    <string name="layout_list_clean_points_item_preview_text">TextView</string>
     <string name="fragment_home_text_logout">Logout</string>
     <string name="activity_login_title_top">Tandil</string>
     <string name="activity_login_title_bottom">Recicla</string>
+    <string name="layout_list_home_item_description">Description</string>
+    <string name="layout_list_home_item_quantity">Quantity</string>
+    <string name="layout_list_home_item_date">Date</string>
 </resources>

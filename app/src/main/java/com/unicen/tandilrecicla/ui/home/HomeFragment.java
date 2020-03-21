@@ -9,17 +9,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.unicen.tandilrecicla.MainActivitySharedViewModel;
 import com.unicen.tandilrecicla.R;
 import com.unicen.tandilrecicla.data.model.Recycling;
@@ -36,6 +42,12 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
 
     private MainActivitySharedViewModel maSharedViewModel;
 
+    private RecyclerView recyclerView;
+
+    private FloatingActionButton changeDisplayInfoIcon;
+
+    private ProgressBar progressBar;
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         homeViewModel = ViewModelProviders.of(this, new HomeViewModelFactory()).get(HomeViewModel.class);
@@ -51,8 +63,14 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
             getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
         final PieChart chart = root.findViewById(R.id.fragment_home_pie_chart);
-        ImageButton centerIcon = root.findViewById(R.id.fragment_home_center_button);
-        ImageButton logoutIcon = root.findViewById(R.id.fragment_home_logout_button);
+        final ImageButton centerIcon = root.findViewById(R.id.fragment_home_center_button);
+        final ImageButton logoutIcon = root.findViewById(R.id.fragment_home_logout_button);
+        changeDisplayInfoIcon = root.findViewById(R.id.fragment_home_fab);
+        recyclerView = root.findViewById(R.id.fragment_home_recycler_view);
+        progressBar = root.findViewById(R.id.fragment_home_progress_bar);
+
+        progressBar.setVisibility(View.VISIBLE);
+        homeViewModel.setInfoVisible(true);
 
         chart.setOnChartValueSelectedListener(this);
         homeViewModel.setPieChart(chart);
@@ -82,7 +100,30 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
                 }
             }
         });
+        changeDisplayInfoIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getActivity() != null) {
+                    if (homeViewModel.getInfoVisible()) {
+                        chart.setVisibility(View.GONE);
+                        centerIcon.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        changeDisplayInfoIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_cake_graph));
+                        homeViewModel.changeInfoVisible();
+                    } else {
+                        chart.setVisibility(View.VISIBLE);
+                        centerIcon.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+                        changeDisplayInfoIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_list));
+                        homeViewModel.changeInfoVisible();
+                    }
+                }
+            }
+        });
+
         total(chart);
+        totalRecyclingList();
+
         return root;
     }
 
@@ -105,7 +146,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
                 new androidx.lifecycle.Observer<Recycling>() {
                     @Override
                     public void onChanged(Recycling responseBody) {
-                        Log.d(TAG, "onChanged: this is a live data response!");
+                        Log.i(TAG, "onChanged: this is a recycling data response!");
                         final List<Integer> values = new ArrayList<>();
                         values.add(responseBody.getBottles());
                         values.add(responseBody.getPaperboard());
@@ -115,7 +156,32 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
                         homeViewModel.setChartValues(values);
                         homeViewModel.setChartConfiguration(chart);
                     }
-
                 });
+    }
+
+    private void totalRecyclingList() {
+        homeViewModel.getRecyclingListData(maSharedViewModel.getSelected().getValue()).observe(this,
+                new androidx.lifecycle.Observer<List<Recycling>>() {
+                    @Override
+                    public void onChanged(List<Recycling> recyclingList) {
+                        Log.i(TAG, "onChanged: this is a recycling data list response!");
+                        homeViewModel.setListValues(recyclingList);
+                        if (recyclingList.size() == 0) {
+                            changeDisplayInfoIcon.setVisibility(View.GONE);
+                        } else {
+                            initRecyclerView(homeViewModel.getListValues());
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    }
+                });
+    }
+
+    private void initRecyclerView(List<Recycling> recyclingList) {
+        Log.d(TAG, "initRecyclerView: ");
+        HomeRecyclerViewAdapter adapter = new HomeRecyclerViewAdapter(recyclingList);
+        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getContext(), R.anim.layout_animation_fall_down);
+        recyclerView.setLayoutAnimation(animation);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 }

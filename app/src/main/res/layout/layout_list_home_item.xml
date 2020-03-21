@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/layout_list_item_home_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/layout_list_home_item_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/layout_list_item_home_divider" />
+
+    <TextView
+        android:id="@+id/layout_list_item_home_text_bottles_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/main_margin"
+        android:layout_marginBottom="@dimen/main_margin"
+        android:padding="@dimen/main_margin"
+        android:text="@string/layout_list_home_item_description"
+        app:layout_constraintEnd_toStartOf="@+id/layout_list_item_home_text_bottles_quantity"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_list_item_home_date" />
+
+    <TextView
+        android:id="@+id/layout_list_item_home_text_bottles_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/main_margin"
+        android:text="@string/layout_list_home_item_quantity"
+        app:layout_constraintEnd_toStartOf="@id/layout_list_item_home_text_paperboard_description"
+        app:layout_constraintStart_toEndOf="@id/layout_list_item_home_text_bottles_description"
+        app:layout_constraintTop_toTopOf="@id/layout_list_item_home_text_bottles_description" />
+
+    <TextView
+        android:id="@+id/layout_list_item_home_text_paperboard_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/main_margin"
+        android:layout_marginBottom="@dimen/main_margin"
+        android:padding="@dimen/main_margin"
+        android:text="@string/layout_list_home_item_description"
+        app:layout_constraintEnd_toStartOf="@+id/layout_list_item_home_text_paperboard_quantity"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/layout_list_item_home_text_bottles_quantity"
+        app:layout_constraintTop_toTopOf="@id/layout_list_item_home_text_bottles_description" />
+
+    <TextView
+        android:id="@+id/layout_list_item_home_text_paperboard_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/main_margin"
+        android:text="@string/layout_list_home_item_quantity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/layout_list_item_home_text_paperboard_description"
+        app:layout_constraintTop_toTopOf="@id/layout_list_item_home_text_paperboard_description" />
+
+    <TextView
+        android:id="@+id/layout_list_item_home_text_glass_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/main_margin"
+        android:layout_marginBottom="@dimen/main_margin"
+        android:padding="@dimen/main_margin"
+        android:text="@string/layout_list_home_item_description"
+        app:layout_constraintEnd_toStartOf="@+id/layout_list_item_home_text_glass_quantity"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_list_item_home_text_paperboard_description" />
+
+    <TextView
+        android:id="@+id/layout_list_item_home_text_glass_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/main_margin"
+        android:text="@string/layout_list_home_item_quantity"
+        app:layout_constraintEnd_toStartOf="@id/layout_list_item_home_text_tetrabriks_description"
+        app:layout_constraintStart_toEndOf="@id/layout_list_item_home_text_glass_description"
+        app:layout_constraintTop_toTopOf="@id/layout_list_item_home_text_glass_description" />
+
+    <TextView
+        android:id="@+id/layout_list_item_home_text_tetrabriks_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/main_margin"
+        android:padding="@dimen/main_margin"
+        android:text="@string/layout_list_home_item_description"
+        app:layout_constraintEnd_toStartOf="@+id/layout_list_item_home_text_tetrabriks_quantity"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/layout_list_item_home_text_glass_quantity"
+        app:layout_constraintTop_toTopOf="@+id/layout_list_item_home_text_glass_description" />
+
+    <TextView
+        android:id="@+id/layout_list_item_home_text_tetrabriks_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/main_margin"
+        android:text="@string/layout_list_home_item_quantity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/layout_list_item_home_text_tetrabriks_description"
+        app:layout_constraintTop_toTopOf="@id/layout_list_item_home_text_tetrabriks_description" />
+
+    <TextView
+        android:id="@+id/layout_list_item_home_text_cans_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/main_margin"
+        android:layout_marginBottom="@dimen/main_margin"
+        android:padding="@dimen/main_margin"
+        android:text="@string/layout_list_home_item_description"
+        app:layout_constraintEnd_toStartOf="@+id/layout_list_item_home_text_cans_quantity"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_list_item_home_text_tetrabriks_description" />
+
+    <TextView
+        android:id="@+id/layout_list_item_home_text_cans_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/main_margin"
+        android:padding="@dimen/main_margin"
+        android:text="@string/layout_list_home_item_quantity"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/layout_list_item_home_text_cans_description"
+        app:layout_constraintTop_toTopOf="@id/layout_list_item_home_text_cans_description" />
+
+    <View
+        android:id="@+id/layout_list_item_home_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="@id/layout_list_item_home_text_paperboard_quantity"
+        app:layout_constraintStart_toStartOf="@id/layout_list_item_home_text_bottles_description"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

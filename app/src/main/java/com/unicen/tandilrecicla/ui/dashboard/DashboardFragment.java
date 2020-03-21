@@ -45,7 +45,7 @@ public class DashboardFragment extends Fragment {
         }
 
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        recyclerView = root.findViewById(R.id.fragment_notifications_recycler_view);
+        recyclerView = root.findViewById(R.id.fragment_clean_points_recycler_view);
         ImageButton imageButtonDiscard = root.findViewById(R.id.fragment_dashboard_button_discard);
         ImageButton imageButtonRecycle = root.findViewById(R.id.fragment_dashboard_button_recycle);
 

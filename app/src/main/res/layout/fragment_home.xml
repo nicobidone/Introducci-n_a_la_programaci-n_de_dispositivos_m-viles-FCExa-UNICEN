@@ -49,7 +49,39 @@
         android:layout_height="wrap_content"
         android:text="@string/fragment_home_text_logout"
         android:textColor="@color/light_gray"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_home_logout_button"
         app:layout_constraintEnd_toEndOf="@+id/fragment_home_logout_button"
-        app:layout_constraintStart_toStartOf="@+id/fragment_home_logout_button"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_home_logout_button" />
+        app:layout_constraintStart_toStartOf="@+id/fragment_home_logout_button" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fragment_home_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/main_margin"
+        android:layout_marginEnd="@dimen/main_margin"
+        android:layoutAnimation="@anim/layout_animation_fall_down"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_home_logout_button" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fragment_home_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/main_margin"
+        android:src="@drawable/ic_list"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/fragment_home_progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

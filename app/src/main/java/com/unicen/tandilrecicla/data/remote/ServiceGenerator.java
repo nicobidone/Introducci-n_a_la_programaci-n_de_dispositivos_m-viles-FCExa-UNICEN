@@ -20,11 +20,7 @@ public class ServiceGenerator {
 
     private static final String TAG = "ServiceGenerator";
 
-    private static final String BASE_URL = "http://192.168.0.10:8080/api/";
-
-    public interface OnConnectionTimeoutListener {
-        void onConnectionTimeout();
-    }
+    private static final String BASE_URL = "http://192.168.0.8:8080/api/";
 
     private static OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .addInterceptor(new Interceptor() {

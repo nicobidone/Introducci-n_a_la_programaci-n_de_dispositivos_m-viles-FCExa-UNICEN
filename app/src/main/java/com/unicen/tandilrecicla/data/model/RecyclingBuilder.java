@@ -1,8 +1,10 @@
 package com.unicen.tandilrecicla.data.model;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class RecyclingBuilder {
 
@@ -16,6 +18,10 @@ public class RecyclingBuilder {
         recycling.setDate("");
         recycling.setId("");
         return recycling;
+    }
+
+    public static List<Recycling> getRecyclingEmptyList() {
+        return new ArrayList<>();
     }
 
     static public Recycling getRecycling(int bottles, int paperboard, int glass, int tetrabriks, int cans) {

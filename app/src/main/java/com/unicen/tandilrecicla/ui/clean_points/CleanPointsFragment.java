@@ -1,4 +1,4 @@
-package com.unicen.tandilrecicla.ui.notifications;
+package com.unicen.tandilrecicla.ui.clean_points;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -16,16 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.unicen.tandilrecicla.R;
 import com.unicen.tandilrecicla.data.model.Utils;
 
-public class NotificationsFragment extends Fragment {
+public class CleanPointsFragment extends Fragment {
 
-    private static final String TAG = "NotificationsFragment";
+    private static final String TAG = "CleanPointsFragment";
 
     private String[] mPoints;
     private RecyclerView recyclerView;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_notifications, container, false);
-        recyclerView = root.findViewById(R.id.fragment_notifications_recycler_view);
+        View root = inflater.inflate(R.layout.fragment_clean_points, container, false);
+        recyclerView = root.findViewById(R.id.fragment_clean_points_recycler_view);
 
         initRecyclingPoints();
         initRecyclerView();
@@ -41,7 +41,7 @@ public class NotificationsFragment extends Fragment {
     private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView: Init recyclerView");
 
-        NotificationsRecyclerViewAdapter adapter = new NotificationsRecyclerViewAdapter(mPoints);
+        CleanPointsRecyclerViewAdapter adapter = new CleanPointsRecyclerViewAdapter(mPoints);
         LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getContext(), R.anim.layout_animation_fall_down);
         recyclerView.setLayoutAnimation(animation);
         recyclerView.setAdapter(adapter);

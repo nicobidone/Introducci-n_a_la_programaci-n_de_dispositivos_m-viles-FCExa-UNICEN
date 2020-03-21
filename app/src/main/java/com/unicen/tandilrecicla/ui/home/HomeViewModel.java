@@ -36,12 +36,15 @@ public class HomeViewModel extends ViewModel {
     private Typeface tfLight;
 
     private List<Integer> values;
+    private List<Recycling> recyclingList;
+    private boolean infoVisible;
 
     HomeViewModel(HomeRepository homeRepository) {
         mText = new MutableLiveData<>();
         mText.setValue("This is home fragment");
         this.homeRepository = homeRepository;
         this.values = null;
+        this.infoVisible = true;
     }
 
     void setChartValues(List<Integer> values) {
@@ -58,6 +61,10 @@ public class HomeViewModel extends ViewModel {
 
     LiveData<Recycling> getTotalRecyclingData(String id) {
         return homeRepository.getTotalRecyclingQuery(id);
+    }
+
+    LiveData<List<Recycling>> getRecyclingListData(String id) {
+        return homeRepository.getRecyclingListQuery(id);
     }
 
     void setChartConfiguration(PieChart chart) {
@@ -86,7 +93,7 @@ public class HomeViewModel extends ViewModel {
         chart.setRotationEnabled(true);
         chart.setHighlightPerTapEnabled(true);
 
-        setData();
+        setChartData();
 
         chart.animateY(1400, Easing.EaseInOutQuad);
 
@@ -105,7 +112,7 @@ public class HomeViewModel extends ViewModel {
         chart.setEntryLabelTextSize(12f);
     }
 
-    private void setData() {
+    private void setChartData() {
         ArrayList<PieEntry> entries = new ArrayList<>();
 
         boolean showValues = false;
@@ -133,11 +140,10 @@ public class HomeViewModel extends ViewModel {
         // add a lot of colors
 
         dataSet.setColors(Utils.getVordiplomColors());
-        //dataSet.setSelectionShift(0f);
 
         data = new PieData(dataSet);
 
-//        Pie Chart without percent
+        // Pie Chart without percent
         data.setValueFormatter(new DefaultValueFormatter(0));
         chart.setUsePercentValues(false);
 
@@ -150,7 +156,6 @@ public class HomeViewModel extends ViewModel {
         // undo all highlights
         chart.highlightValues(null);
 
-        // actionToggleCurvedSlices
         boolean toSet = !chart.isDrawRoundedSlicesEnabled() || !chart.isDrawHoleEnabled();
         chart.setDrawRoundedSlices(toSet);
         if (toSet && !chart.isDrawHoleEnabled()) {
@@ -182,5 +187,25 @@ public class HomeViewModel extends ViewModel {
         }
         chart.setUsePercentValues(!usePercentValuesEnabled);
         chart.invalidate();
+    }
+
+    void setListValues(List<Recycling> recyclingList) {
+        this.recyclingList = recyclingList;
+    }
+
+    List<Recycling> getListValues() {
+        return this.recyclingList;
+    }
+
+    void changeInfoVisible() {
+        this.infoVisible = !this.infoVisible;
+    }
+
+    boolean getInfoVisible() {
+        return this.infoVisible;
+    }
+
+    void setInfoVisible(boolean state) {
+        this.infoVisible = state;
     }
 }
