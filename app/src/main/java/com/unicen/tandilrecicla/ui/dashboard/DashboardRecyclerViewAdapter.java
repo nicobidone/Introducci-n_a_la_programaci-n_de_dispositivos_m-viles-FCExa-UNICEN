@@ -53,7 +53,7 @@ public class DashboardRecyclerViewAdapter extends RecyclerView.Adapter<Dashboard
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: imageButtonPlus");
-                ((DashboardViewModel) viewModel).addQuantity(position, 1);
+                ((DashboardViewModel) viewModel).addQuantity(position);
                 holder.textQuantity.setText(((DashboardViewModel) viewModel).getRecyclingQuantity(position));
             }
         });
@@ -61,7 +61,7 @@ public class DashboardRecyclerViewAdapter extends RecyclerView.Adapter<Dashboard
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: imageButtonMinus");
-                ((DashboardViewModel) viewModel).removeQuantity(position, 1);
+                ((DashboardViewModel) viewModel).removeQuantity(position);
                 holder.textQuantity.setText(((DashboardViewModel) viewModel).getRecyclingQuantity(position));
             }
         });
@@ -72,7 +72,7 @@ public class DashboardRecyclerViewAdapter extends RecyclerView.Adapter<Dashboard
         return mNames.length;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageButton imageButtonMinus;
         ImageButton imageButtonPlus;

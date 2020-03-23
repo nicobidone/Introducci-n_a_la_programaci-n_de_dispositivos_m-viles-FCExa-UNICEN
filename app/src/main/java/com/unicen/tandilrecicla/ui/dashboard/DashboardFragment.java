@@ -1,7 +1,10 @@
 package com.unicen.tandilrecicla.ui.dashboard;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +24,8 @@ import com.unicen.tandilrecicla.MainActivitySharedViewModel;
 import com.unicen.tandilrecicla.R;
 import com.unicen.tandilrecicla.data.model.Recycling;
 import com.unicen.tandilrecicla.data.model.Utils;
+
+import static com.unicen.tandilrecicla.data.Constants.RECYCLING_STATUS;
 
 public class DashboardFragment extends Fragment {
 
@@ -102,5 +108,33 @@ public class DashboardFragment extends Fragment {
                         Log.d(TAG, "onChanged: " + responseBody.getDate());
                     }
                 });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        FragmentActivity fragmentActivity = this.getActivity();
+        if (fragmentActivity != null) {
+            SparseIntArray recyclings = dashboardViewModel.getRecyclings();
+            SharedPreferences sharedPreferences = fragmentActivity.getSharedPreferences(RECYCLING_STATUS, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            for (int i = 0; i < 5; i++) {
+                editor.putInt(String.valueOf(i), recyclings.get(i));
+            }
+            editor.apply();
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FragmentActivity fragmentActivity = this.getActivity();
+        if (fragmentActivity != null) {
+            SparseIntArray recyclings = dashboardViewModel.getRecyclings();
+            SharedPreferences sharedPreferences = fragmentActivity.getSharedPreferences(RECYCLING_STATUS, Context.MODE_PRIVATE);
+            for (int i = 0; i < 5; i++) {
+                recyclings.put(i, sharedPreferences.getInt(String.valueOf(i), 0));
+            }
+        }
     }
 }

@@ -5,4 +5,5 @@ public class Constants {
     public static final String KEY_USER = "user";
     public static final String KEY_LOGGED = "logged";
     public static final String FILE_NAME = "login_status";
+    public static final String RECYCLING_STATUS = "recycling_status";
 }

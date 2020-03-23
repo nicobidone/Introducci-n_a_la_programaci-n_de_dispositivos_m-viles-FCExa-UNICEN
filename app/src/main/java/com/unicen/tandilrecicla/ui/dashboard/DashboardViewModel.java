@@ -24,19 +24,19 @@ class DashboardViewModel extends ViewModel {
         return String.valueOf(quantity.get(position));
     }
 
-    void addQuantity(Integer position, Integer integer) {
-        Integer val = quantity.get(position);
+    void addQuantity(Integer position) {
+        int val = quantity.get(position);
         if (val != 0) {
-            quantity.put(position, val + integer);
+            quantity.put(position, val + 1);
         } else {
             quantity.put(position, 1);
         }
     }
 
-    void removeQuantity(Integer position, Integer integer) {
-        Integer val = quantity.get(position);
+    void removeQuantity(Integer position) {
+        int val = quantity.get(position);
         if (val > 0) {
-            quantity.put(position, val - integer);
+            quantity.put(position, val - 1);
         }
     }
 
@@ -57,5 +57,9 @@ class DashboardViewModel extends ViewModel {
                         quantity.get(2),
                         quantity.get(3),
                         quantity.get(4)));
+    }
+
+    SparseIntArray getRecyclings() {
+        return quantity;
     }
 }

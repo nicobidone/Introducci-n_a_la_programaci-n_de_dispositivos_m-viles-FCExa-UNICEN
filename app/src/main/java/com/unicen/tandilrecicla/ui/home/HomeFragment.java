@@ -124,6 +124,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         total(chart);
         totalRecyclingList();
 
+        progressBar.setVisibility(View.GONE);
         return root;
     }
 
