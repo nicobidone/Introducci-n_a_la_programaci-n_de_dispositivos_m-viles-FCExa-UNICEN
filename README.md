@@ -42,5 +42,5 @@ https://www.flaticon.es/icono-gratis/lista_565700?term=lista&page=1&position=20
 https://github.com/PhilJay/MPAndroidChart
 
 ## Ejemplos
-![](gifs/ezgif.com-resize3.gif)
 ![](gifs/ezgif.com-video-to-gif2.gif)
+![](gifs/ezgif.com-video-to-gif.gif)
