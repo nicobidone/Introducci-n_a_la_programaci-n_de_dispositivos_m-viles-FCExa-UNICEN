@@ -26,6 +26,7 @@ https://docs.google.com/document/d/1PCTIJF2hW52DJtY2MT5CmcKdi6FB9-aBSuOucm5md-0/
 - https://www.tutorialspoint.com/design_pattern/builder_pattern.htm
 - https://proandroiddev.com/enter-animation-using-recyclerview-and-layoutanimation-part-1-list-75a874a5d213
 - https://help.github.com/es/github/writing-on-github/basic-writing-and-formatting-syntax#headings
+- https://github.com/StackExchange/stack-blog/issues/275
 
 ## Iconos diseñados por 
 https://www.flaticon.es/autores/freepik
