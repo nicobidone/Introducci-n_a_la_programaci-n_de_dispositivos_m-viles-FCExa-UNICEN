@@ -19,22 +19,4 @@ public class RegisteredUserBuilder {
         registeredUser.setAddress(address);
         return registeredUser;
     }
-
-    static public RegisteredUser getRegisteredUser() {
-        Address address = new Address();
-        address.setDepartment("Tandil");
-        address.setCity("Tandil");
-        address.setNumber(874);
-        address.setStreetAddress("Alberdi");
-        address.setCity("Tandil");
-        address.setState("Buenos Aires");
-        address.setZipCode("7000");
-        RegisteredUser registeredUser = new RegisteredUser();
-        registeredUser.setFirstName("Mauri");
-        registeredUser.setLastName("Arroqui");
-        registeredUser.setMail("mauriarroqui@gmail.com");
-        registeredUser.setUsername("marroqui");
-        registeredUser.setAddress(address);
-        return registeredUser;
-    }
 }
