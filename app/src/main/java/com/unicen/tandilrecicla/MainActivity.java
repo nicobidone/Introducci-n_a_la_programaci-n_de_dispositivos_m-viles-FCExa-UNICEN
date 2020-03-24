@@ -14,6 +14,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.unicen.tandilrecicla.ui.home.HomeViewModel;
+import com.unicen.tandilrecicla.ui.home.HomeViewModelFactory;
 import com.unicen.tandilrecicla.ui.login.LoginActivity;
 
 import static com.unicen.tandilrecicla.data.Constants.EMPTY_STRING;
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
         mASharedViewModel = ViewModelProviders.of(this).get(MainActivitySharedViewModel.class);
+        ViewModelProviders.of(this, new HomeViewModelFactory()).get(HomeViewModel.class);
         if (!sharedPreferences.getBoolean(KEY_LOGGED, false)) {
             startActivity(new Intent(LoginActivity.getIntent(this)));
         } else {

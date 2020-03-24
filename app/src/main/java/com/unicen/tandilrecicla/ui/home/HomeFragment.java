@@ -57,6 +57,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
             homeViewModel.setTypefaces(Typeface.createFromAsset(getActivity().getAssets(), "open_sans_regular.ttf"),
                     Typeface.createFromAsset(getActivity().getAssets(), "open_sans_light.ttf"));
             maSharedViewModel = ViewModelProviders.of(getActivity()).get(MainActivitySharedViewModel.class);
+            homeViewModel = ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
         }
     }
 
