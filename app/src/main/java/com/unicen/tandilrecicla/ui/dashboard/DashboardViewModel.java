@@ -62,4 +62,8 @@ class DashboardViewModel extends ViewModel {
     SparseIntArray getRecyclings() {
         return quantity;
     }
+
+    void setRecyclings(SparseIntArray recyclings) {
+        this.quantity = recyclings;
+    }
 }

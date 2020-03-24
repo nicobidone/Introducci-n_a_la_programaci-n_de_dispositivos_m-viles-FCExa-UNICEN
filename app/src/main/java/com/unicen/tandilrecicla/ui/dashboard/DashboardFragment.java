@@ -130,11 +130,12 @@ public class DashboardFragment extends Fragment {
         super.onStart();
         FragmentActivity fragmentActivity = this.getActivity();
         if (fragmentActivity != null) {
-            SparseIntArray recyclings = dashboardViewModel.getRecyclings();
+            SparseIntArray recyclings = new SparseIntArray();
             SharedPreferences sharedPreferences = fragmentActivity.getSharedPreferences(RECYCLING_STATUS, Context.MODE_PRIVATE);
             for (int i = 0; i < 5; i++) {
                 recyclings.put(i, sharedPreferences.getInt(String.valueOf(i), 0));
             }
+            dashboardViewModel.setRecyclings(recyclings);
         }
     }
 }
