@@ -18,7 +18,7 @@
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_clean_points"
         android:name="com.unicen.tandilrecicla.ui.clean_points.CleanPointsFragment"
         android:label="@string/title_clean_points"
         tools:layout="@layout/fragment_clean_points" />

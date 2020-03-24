@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -48,18 +49,20 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
 
     private ProgressBar progressBar;
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         homeViewModel = ViewModelProviders.of(this, new HomeViewModelFactory()).get(HomeViewModel.class);
-
         if (getActivity() != null) {
             homeViewModel.setTypefaces(Typeface.createFromAsset(getActivity().getAssets(), "open_sans_regular.ttf"),
                     Typeface.createFromAsset(getActivity().getAssets(), "open_sans_light.ttf"));
             maSharedViewModel = ViewModelProviders.of(getActivity()).get(MainActivitySharedViewModel.class);
         }
+    }
 
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        if (getActivity().getWindow() != null) {
+        if (getActivity() != null && getActivity().getWindow() != null) {
             getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
         final PieChart chart = root.findViewById(R.id.fragment_home_pie_chart);
@@ -71,7 +74,6 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
 
         progressBar.setVisibility(View.VISIBLE);
         homeViewModel.setInfoVisible(true);
-
         chart.setOnChartValueSelectedListener(this);
         homeViewModel.setPieChart(chart);
         centerIcon.setOnClickListener(new View.OnClickListener() {
@@ -120,10 +122,8 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
                 }
             }
         });
-
-        total(chart);
+        totalRecycling(chart);
         totalRecyclingList();
-
         progressBar.setVisibility(View.GONE);
         return root;
     }
@@ -142,7 +142,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         Log.i("PieChart", "nothing selected");
     }
 
-    private void total(final PieChart chart) {
+    private void totalRecycling(final PieChart chart) {
         homeViewModel.getTotalRecyclingData(maSharedViewModel.getSelected().getValue()).observe(this,
                 new androidx.lifecycle.Observer<Recycling>() {
                     @Override
@@ -166,12 +166,12 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
                     @Override
                     public void onChanged(List<Recycling> recyclingList) {
                         Log.i(TAG, "onChanged: this is a recycling data list response!");
-                        homeViewModel.setListValues(recyclingList);
-                        if (recyclingList.size() == 0) {
-                            changeDisplayInfoIcon.setVisibility(View.GONE);
-                        } else {
+                        if (recyclingList.size() != 0 || homeViewModel.getListValues() != null) {
+                            homeViewModel.setListValues(recyclingList);
                             initRecyclerView(homeViewModel.getListValues());
                             progressBar.setVisibility(View.GONE);
+                        } else {
+                            changeDisplayInfoIcon.setVisibility(View.GONE);
                         }
                     }
                 });

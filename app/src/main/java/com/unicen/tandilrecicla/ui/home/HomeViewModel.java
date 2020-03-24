@@ -48,7 +48,18 @@ public class HomeViewModel extends ViewModel {
     }
 
     void setChartValues(List<Integer> values) {
-        this.values = values;
+        if (!hasValues() || !hasEmptyValues(values)) {
+            this.values = values;
+        }
+    }
+
+    private boolean hasEmptyValues(List<Integer> values) {
+        for (int val : values) {
+            if (val != 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     boolean hasValues() {
@@ -190,7 +201,9 @@ public class HomeViewModel extends ViewModel {
     }
 
     void setListValues(List<Recycling> recyclingList) {
-        this.recyclingList = recyclingList;
+        if (recyclingList.size() != 0) {
+            this.recyclingList = recyclingList;
+        }
     }
 
     List<Recycling> getListValues() {
